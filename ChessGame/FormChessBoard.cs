@@ -7,18 +7,20 @@ namespace ChessGame
 {
     public partial class FormChessBoard : Form
     {
+        private ChessBoard chessGame;
+
         public FormChessBoard()
         {
             InitializeComponent();
+            var test = new ChessBuilder();
+            test.TestObjects();
         }
 
         private void FormChessBoard_Paint(object sender, PaintEventArgs e)
         {
-            var chessGame = new ChessBoard(this, 50, 20, 3);
+            chessGame = new ChessBoard(this, 50, 20, 3);
             chessGame.BuildChessBoard(8, Color.PeachPuff, Color.Peru);
             chessGame.AddChessPieces();
-            var test = new ChessBuilder();
-            test.TestObjects();
         }
 
         private void FormChessBoard_Resize(object sender, EventArgs e)
