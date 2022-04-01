@@ -49,10 +49,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="view\ChessBoard.cs" />
-    <Compile Include="FormChessBoard.cs">
+    <Compile Include="view\FormChessBoard.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormChessBoard.Designer.cs">
+    <Compile Include="view\FormChessBoard.Designer.cs">
       <DependentUpon>FormChessBoard.cs</DependentUpon>
     </Compile>
     <Compile Include="model\Bishop.cs" />
@@ -73,7 +73,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="test\ChessBuilder.cs" />
-    <EmbeddedResource Include="FormChessBoard.resx">
+    <EmbeddedResource Include="view\FormChessBoard.resx">
       <DependentUpon>FormChessBoard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
