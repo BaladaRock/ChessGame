@@ -4,6 +4,8 @@ namespace ChessGame.model
 {
     public class Pawn : ChessPiece
     {
+        private const int DoubleMove = 2;
+
         private readonly int boardSize;
 
         public Pawn(ColorType color) : base(color)
@@ -16,67 +18,92 @@ namespace ChessGame.model
 
         public bool Promoted => CheckPosition();
 
-        public override List<Position> GetAvailablePositions()
+        public override IEnumerable<IEnumerable<Position>> GetAvailablePositions()
+        {
+            var doubleMove = GetDoubleMove(Color);
+
+            return Color == ColorType.white
+                ? new[] {
+                    GetUpperColumn(),
+                    doubleMove
+                }
+
+                : new[] {
+                    GetLowerColumn(),
+                    doubleMove
+                };
+        }
+
+        public override IEnumerable<IEnumerable<Position>> GetCapturePositions()
         {
             return Color == ColorType.white
-                ? UpdateWhitePositions()
-                : UpdateBlackPositions();
+                ? new[] {
+                    GetUpperLeftDiagonal(),
+                    GetUpperRightDiagonal()
+                }
+
+                : new[] {
+                    GetLowerLeftDiagonal(),
+                    GetLowerRightDiagonal()
+                };
         }
 
-        public override List<Position> GetCapturePositions()
-        {
-            int yIndex = CurrentPosition.Y;
-            return Color == ColorType.white
-                ? GetCapturePositions(yIndex - 1)
-                : GetCapturePositions(yIndex + 1);
-        }
-
-        public override List<Position> GetLowerLeftPositions()
-        {
-            return default;
-        }
-
-        public override List<Position> GetUpperLeftPositions()
-        {
-            return default;
-        }
-
-        public override List<Position> GetLowerRightPositions()
-        {
-            return default;
-        }
-
-        public override List<Position> GetUpperRightPositions()
-        {
-            return default;
-        }
-
-        private List<Position> UpdateWhitePositions()
+        protected override IEnumerable<Position> GetUpperColumn()
         {
             return AddSingleSquarePositions(
-             new Position(CurrentX, CurrentY - 1),
-             new Position(CurrentX, CurrentY - 2),
-             (CurrentY > 0 && CurrentY < boardSize, !WasMoved())
+              new Position(CurrentX, CurrentY - 1),
+              CurrentY > 0 && CurrentY < boardSize
             );
         }
 
-        private List<Position> UpdateBlackPositions()
+        protected override IEnumerable<Position> GetLowerColumn()
         {
             return AddSingleSquarePositions(
-             new Position(CurrentX, CurrentY + 1),
-             new Position(CurrentX, CurrentY + 2),
-             (CurrentY > 0 && CurrentY < boardSize, !WasMoved())
+              new Position(CurrentX, CurrentY + 1),
+              CurrentY > 0 && CurrentY < boardSize
             );
         }
 
-        private List<Position> GetCapturePositions(int yIncrement)
+        protected override IEnumerable<Position> GetUpperLeftDiagonal()
         {
-            bool yIndexCondition = CurrentY > 0 && CurrentY < boardSize;
             return AddSingleSquarePositions(
-            new Position(CurrentX - 1, yIncrement),
-            new Position(CurrentX + 1, yIncrement),
-            (yIndexCondition && CurrentX != 0, yIndexCondition && CurrentX != boardSize)
-           );
+              new Position(CurrentX - 1, CurrentY - 1),
+              CurrentY > 0 && CurrentX > 0
+            );
+        }
+
+        protected override IEnumerable<Position> GetLowerLeftDiagonal()
+        {
+            return AddSingleSquarePositions(
+              new Position(CurrentX - 1, CurrentY + 1),
+              CurrentY > 0 && CurrentX > 0
+            );
+        }
+
+        protected override IEnumerable<Position> GetUpperRightDiagonal()
+        {
+            return AddSingleSquarePositions(
+              new Position(CurrentX + 1, CurrentY - 1),
+              CurrentY < boardSize && CurrentX < boardSize
+            );
+        }
+
+        protected override IEnumerable<Position> GetLowerRightDiagonal()
+        {
+            return AddSingleSquarePositions(
+              new Position(CurrentX + 1, CurrentY + 1),
+              CurrentY < boardSize && CurrentX < boardSize
+            );
+        }
+
+        private IEnumerable<Position> GetDoubleMove(ColorType color)
+        {
+            int toMove = color == ColorType.white ? CurrentY - DoubleMove : CurrentY + DoubleMove;
+
+            return AddSingleSquarePositions(
+              new Position(CurrentX, toMove),
+              !WasMoved()
+            );
         }
 
         private bool CheckPosition()

@@ -17,18 +17,13 @@ namespace ChessGame.model
             BoardSize = 7;
         }
 
-        protected List<Position> AddSingleSquarePositions(Position firstPair, Position secondPair, (bool, bool) requirements)
+        protected IEnumerable<Position> AddSingleSquarePositions(Position position, bool requirement)
         {
-            var positions = new List<Position>(2);
+            var positions = new List<Position>(1);
 
-            if (requirements.Item1)
+            if (requirement)
             {
-                positions.Add(firstPair);
-            }
-
-            if (requirements.Item2)
-            {
-                positions.Add(secondPair);
+                positions.Add(position);
             }
 
             return positions;
@@ -42,6 +37,8 @@ namespace ChessGame.model
 
         public MovementType Movement { get; protected set; }
 
+        public MovementType GetMovementType() => Movement;
+
         protected int BoardSize { get; set; }
 
         protected int CurrentX => CurrentPosition.X;
@@ -50,15 +47,102 @@ namespace ChessGame.model
 
         public abstract PieceType PieceType { get; }
 
-        public abstract List<Position> GetAvailablePositions();
+        public abstract IEnumerable<IEnumerable<Position>> GetAvailablePositions();
 
-        public abstract List<Position> GetLowerLeftPositions();
+        protected virtual IEnumerable<Position> GetLowerLeftDiagonal()
+        {
+            var positions = new List<Position>(BoardSize);
 
-        public abstract List<Position> GetUpperLeftPositions();
+            for (var (x, y) = (CurrentX - 1, CurrentY + 1); (x >= 0 && y <= BoardSize); x--, y++)
+            {
+                positions.Add(new Position(x, y));
+            }
 
-        public abstract List<Position> GetLowerRightPositions();
+            return positions;
+        }
 
-        public abstract List<Position> GetUpperRightPositions();
+        protected virtual IEnumerable<Position> GetUpperLeftDiagonal()
+        {
+            var positions = new List<Position>(BoardSize);
+            for (var (x, y) = (CurrentX - 1, CurrentY - 1); (x >= 0 && y >= 0); x--, y--)
+            {
+                positions.Add(new Position(x, y));
+            }
+
+            return positions;
+        }
+
+        protected virtual IEnumerable<Position> GetLowerRightDiagonal()
+        {
+            var positions = new List<Position>(BoardSize);
+
+            for (var (x, y) = (CurrentX + 1, CurrentY + 1); (x <= BoardSize && y <= BoardSize); x++, y++)
+            {
+                positions.Add(new Position(x, y));
+            }
+
+            return positions;
+        }
+
+        protected virtual IEnumerable<Position> GetUpperRightDiagonal()
+        {
+            var positions = new List<Position>(BoardSize);
+
+            for (var (x, y) = (CurrentX + 1, CurrentY - 1); (x <= BoardSize && y >= 0); x++, y--)
+            {
+                positions.Add(new Position(x, y));
+            }
+
+            return positions;
+        }
+
+        protected virtual IEnumerable<Position> GetLeftLine()
+        {
+            var positions = new List<Position>(BoardSize);
+
+            for (int i = CurrentX - 1; i >= 0; i--)
+            {
+                positions.Add(new Position(i, CurrentY));
+            }
+
+            return positions;
+        }
+
+        protected virtual IEnumerable<Position> GetRightLine()
+        {
+            var positions = new List<Position>(BoardSize);
+
+            for (int i = CurrentX + 1; i <= BoardSize; i++)
+            {
+                positions.Add(new Position(i, CurrentY));
+            }
+
+            return positions;
+        }
+
+        protected virtual IEnumerable<Position> GetUpperColumn()
+        {
+            var positions = new List<Position>(BoardSize);
+
+            for (int i = CurrentY - 1; i >= 0; i--)
+            {
+                positions.Add(new Position(CurrentX, i));
+            }
+
+            return positions;
+        }
+
+        protected virtual IEnumerable<Position> GetLowerColumn()
+        {
+            var positions = new List<Position>(BoardSize);
+
+            for (int i = CurrentY + 1; i <= BoardSize; i++)
+            {
+                positions.Add(new Position(CurrentX, i));
+            }
+
+            return positions;
+        }
 
         public virtual void OccupySquare(ChessSquare chessSquare)
         {
@@ -72,11 +156,6 @@ namespace ChessGame.model
             currentSquare = chessSquare;
         }
 
-        public bool WasMoved()
-        {
-            return wasMoved;
-        }
-
         public virtual void MovePiece(ChessSquare activeSquare)
         {
             if (activeSquare == null)
@@ -88,11 +167,14 @@ namespace ChessGame.model
             wasMoved = true;
         }
 
-        public virtual List<Position> GetCapturePositions()
+        public bool WasMoved()
+        {
+            return wasMoved;
+        }
+
+        public virtual IEnumerable<IEnumerable<Position>> GetCapturePositions()
         {
             return GetAvailablePositions();
         }
-
-        public MovementType GetMovementType() => Movement;
     }
 }

@@ -8,9 +8,9 @@ namespace ChessGame.model
 
         void MovePiece(ChessSquare activeSquare);
 
-        List<Position> GetAvailablePositions();
+        IEnumerable<IEnumerable<Position>> GetAvailablePositions();
 
-        List<Position> GetCapturePositions();
+        IEnumerable<IEnumerable<Position>> GetCapturePositions();
 
         ColorType Color { get; }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ChessGame.model
 {
@@ -57,7 +58,7 @@ namespace ChessGame.model
             else
             {
                 return piecePreviouslyClicked
-                  && MoveIfLegal(freshlyClicked, x, y);
+                  && MoveIfLegal(freshlyClicked);
             }
         }
 
@@ -140,23 +141,14 @@ namespace ChessGame.model
             return true;
         }
 
-        private bool MoveIfLegal(ChessSquare freshlyClicked, int x, int y)
+        private bool MoveIfLegal(ChessSquare freshlyClicked)
         {
-            ChessPiece pieceToCheck = (ChessPiece)ActiveSquare.Piece;
+            return CheckMultiplePositions((ChessPiece)ActiveSquare.Piece, freshlyClicked);
+        }
 
-            if (pieceToCheck.GetMovementType() == MovementType.multipleSquares)
-            {
-                return CheckMultiplePositions(pieceToCheck, freshlyClicked);
-            }
-
-            foreach (var position in GetAvailablePositions(pieceToCheck))
-            {
-                if (position.X == x && position.Y== y)
-                {
-                    return ApplyMove(freshlyClicked);
-                }
-            }
-            return ResetState();
+        private bool IsSquareAvailable(Position position, int x, int y)
+        {
+            return position.X == x && position.Y == y;
         }
 
         private bool CheckCaptureSquares(ChessSquare freshlyClicked)
@@ -168,64 +160,31 @@ namespace ChessGame.model
                 return false;
             }
 
-            if (activePiece.GetMovementType() == MovementType.multipleSquares)
-            {
-                return CheckMultipleCapturePositions(activePiece, freshlyClicked);
-            }
-
-            Position coordinates = pieceToCheck.CurrentPosition;
-
-            foreach (var position in activePiece.GetCapturePositions())
-            {
-                if (position.X == coordinates.X && position.Y == coordinates.Y)
-                {
-                    return ApplyMove(freshlyClicked);
-                }
-            }
-
-            return ResetState();
+            return CheckMultipleCapturePositions(activePiece, freshlyClicked);
         }
 
         private bool CheckMultipleCapturePositions(ChessPiece pieceToCheck, ChessSquare clickedSquare)
         {
             bool foundPositions = ChececkForAllCaptureDirections(pieceToCheck, clickedSquare);
-
-            if (pieceToCheck.PieceType == PieceType.queen)
-            {
-                Queen queenPiece = (Queen)pieceToCheck;
-                foundPositions = foundPositions || ChececkForAllCaptureDirections(queenPiece.RookPiece, clickedSquare);
-            }
-
             return foundPositions ? foundPositions : ResetState();
-        }
-
-        private bool ChececkForAllCaptureDirections(ChessPiece pieceToCheck, ChessSquare clickedSquare)
-        {
-            return CheckForOneCaptureDirection(clickedSquare, pieceToCheck.GetUpperLeftPositions(), pieceToCheck.Color) ||
-                CheckForOneCaptureDirection(clickedSquare, pieceToCheck.GetLowerLeftPositions(), pieceToCheck.Color) ||
-                CheckForOneCaptureDirection(clickedSquare, pieceToCheck.GetUpperRightPositions(), pieceToCheck.Color) ||
-                CheckForOneCaptureDirection(clickedSquare, pieceToCheck.GetLowerRightPositions(), pieceToCheck.Color);
         }
 
         private bool CheckMultiplePositions(ChessPiece pieceToCheck, ChessSquare clickedSquare)
         {
             bool foundPositions = ChececkForAllDirections(pieceToCheck, clickedSquare);
-
-            if (pieceToCheck.PieceType == PieceType.queen)
-            {
-                Queen queenPiece = (Queen)pieceToCheck;
-                foundPositions = foundPositions || ChececkForAllDirections(queenPiece.RookPiece, clickedSquare);
-            }
-
             return foundPositions ? foundPositions : ResetState();
+        }
+
+        private bool ChececkForAllCaptureDirections(ChessPiece pieceToCheck, ChessSquare clickedSquare)
+        {
+            return pieceToCheck.GetCapturePositions()
+               .Any(direction => CheckForOneCaptureDirection(clickedSquare, direction, pieceToCheck.Color));
         }
 
         private bool ChececkForAllDirections(ChessPiece pieceToCheck, ChessSquare clickedSquare)
         {
-            return CheckForOneDirection(clickedSquare, pieceToCheck.GetUpperLeftPositions()) ||
-                CheckForOneDirection(clickedSquare, pieceToCheck.GetLowerLeftPositions()) ||
-                CheckForOneDirection(clickedSquare, pieceToCheck.GetUpperRightPositions()) ||
-                CheckForOneDirection(clickedSquare, pieceToCheck.GetLowerRightPositions());
+            return pieceToCheck.GetAvailablePositions()
+                .Any(direction => CheckForOneDirection(clickedSquare, direction));
         }
 
         private bool CheckForOneDirection(ChessSquare clickedSquare, IEnumerable<Position> squares)
@@ -315,7 +274,7 @@ namespace ChessGame.model
         {
             foreach (var square in boardSquares)
             {
-                if (square.Position.X == rowIndex && square.Position.Y == columnIndex)
+                if (IsSquareAvailable(square.Position, rowIndex, columnIndex))
                 {
                     return square;
                 }
@@ -324,18 +283,26 @@ namespace ChessGame.model
             return null;
         }
 
-        public List<Position> GetAvailablePositions(IPiece activePiece)
+        public IEnumerable<IEnumerable<Position>> GetAvailablePositions(IPiece activePiece)
         {
-            var availablePositions = new List<Position>(boardSize);
-            foreach (var position in activePiece?.GetAvailablePositions())
+            Position notFound = new Position(-1, -1);
+            var directions = activePiece?.GetAvailablePositions();
+
+            return directions.Select(direction => direction.Append(AppendPosition(direction))
+                    .Where(position => !position.Equals(notFound)));
+        }
+
+        private Position AppendPosition(IEnumerable<Position> direction)
+        {
+            foreach (var position in direction)
             {
                 var squareToCheck = boardSquares[position.X, position.Y];
                 if (!squareToCheck.IsOccupied())
                 {
-                    availablePositions.Add(position);
+                    return position;
                 }
             }
-            return availablePositions;
+            return new Position(-1, -1);
         }
     }
 }
