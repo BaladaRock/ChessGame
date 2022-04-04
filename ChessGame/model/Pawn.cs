@@ -16,65 +16,65 @@ namespace ChessGame.model
 
         public bool Promoted => CheckPosition();
 
-        public override List<(int, int)> GetAvailablePositions()
+        public override List<Position> GetAvailablePositions()
         {
             return Color == ColorType.white
                 ? UpdateWhitePositions()
                 : UpdateBlackPositions();
         }
 
-        public override List<(int, int)> GetCapturePositions()
+        public override List<Position> GetCapturePositions()
         {
-            int yIndex = CurrentPosition.Item2;
+            int yIndex = CurrentPosition.Y;
             return Color == ColorType.white
                 ? GetCapturePositions(yIndex - 1)
                 : GetCapturePositions(yIndex + 1);
         }
 
-        public override List<(int, int)> GetLowerLeftPositions()
+        public override List<Position> GetLowerLeftPositions()
         {
             return default;
         }
 
-        public override List<(int, int)> GetUpperLeftPositions()
+        public override List<Position> GetUpperLeftPositions()
         {
             return default;
         }
 
-        public override List<(int, int)> GetLowerRightPositions()
+        public override List<Position> GetLowerRightPositions()
         {
             return default;
         }
 
-        public override List<(int, int)> GetUpperRightPositions()
+        public override List<Position> GetUpperRightPositions()
         {
             return default;
         }
 
-        private List<(int, int)> UpdateWhitePositions()
+        private List<Position> UpdateWhitePositions()
         {
             return AddSingleSquarePositions(
-             (CurrentX, CurrentY - 1),
-             (CurrentX, CurrentY - 2),
+             new Position(CurrentX, CurrentY - 1),
+             new Position(CurrentX, CurrentY - 2),
              (CurrentY > 0 && CurrentY < boardSize, !WasMoved())
             );
         }
 
-        private List<(int, int)> UpdateBlackPositions()
+        private List<Position> UpdateBlackPositions()
         {
             return AddSingleSquarePositions(
-             (CurrentX, CurrentY + 1),
-             (CurrentX, CurrentY + 2),
+             new Position(CurrentX, CurrentY + 1),
+             new Position(CurrentX, CurrentY + 2),
              (CurrentY > 0 && CurrentY < boardSize, !WasMoved())
             );
         }
 
-        private List<(int, int)> GetCapturePositions(int yIncrement)
+        private List<Position> GetCapturePositions(int yIncrement)
         {
             bool yIndexCondition = CurrentY > 0 && CurrentY < boardSize;
             return AddSingleSquarePositions(
-            (CurrentX - 1, yIncrement),
-            (CurrentX + 1, yIncrement),
+            new Position(CurrentX - 1, yIncrement),
+            new Position(CurrentX + 1, yIncrement),
             (yIndexCondition && CurrentX != 0, yIndexCondition && CurrentX != boardSize)
            );
         }
@@ -82,8 +82,8 @@ namespace ChessGame.model
         private bool CheckPosition()
         {
             return Color == ColorType.white
-                ? CurrentPosition.Item2 == 0
-                : CurrentPosition.Item2 == boardSize;
+                ? CurrentPosition.Y == 0
+                : CurrentPosition.Y == boardSize;
         }
     }
 }

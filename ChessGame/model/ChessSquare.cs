@@ -2,13 +2,13 @@
 {
     public class ChessSquare
     {
-        public (int, int) Position { get; }
+        public Position Position { get; }
 
         public IPiece Piece { get; private set; }
 
         public ColorType Type { get; }
 
-        public ChessSquare((int, int) coordinates, ColorType type)
+        public ChessSquare(Position coordinates, ColorType type)
         {
             Position = coordinates;
             Type = type;

@@ -8,6 +8,6 @@ namespace ChessGame.model
 
         void MovePiece(IPiece chessPiece, ChessSquare activeSquare);
 
-        List<(int, int)> GetAvailablePositions(IPiece activePiece);
+        List<Position> GetAvailablePositions(IPiece activePiece);
     }
 }

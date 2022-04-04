@@ -17,9 +17,9 @@ namespace ChessGame.model
             BoardSize = 7;
         }
 
-        protected List<(int, int)> AddSingleSquarePositions((int, int) firstPair, (int, int) secondPair, (bool, bool) requirements)
+        protected List<Position> AddSingleSquarePositions(Position firstPair, Position secondPair, (bool, bool) requirements)
         {
-            var positions = new List<(int, int)>(2);
+            var positions = new List<Position>(2);
 
             if (requirements.Item1)
             {
@@ -36,7 +36,7 @@ namespace ChessGame.model
 
         public ChessSquare GetCurrentSquare() => currentSquare;
 
-        public (int, int) CurrentPosition => currentSquare == null ? (0, 0) : currentSquare.Position;
+        public Position CurrentPosition => currentSquare == null ? new Position(0, 0) : currentSquare.Position;
 
         public ColorType Color { get; }
 
@@ -44,21 +44,21 @@ namespace ChessGame.model
 
         protected int BoardSize { get; set; }
 
-        protected int CurrentX => CurrentPosition.Item1;
+        protected int CurrentX => CurrentPosition.X;
 
-        protected int CurrentY => CurrentPosition.Item2;
+        protected int CurrentY => CurrentPosition.Y;
 
         public abstract PieceType PieceType { get; }
 
-        public abstract List<(int, int)> GetAvailablePositions();
+        public abstract List<Position> GetAvailablePositions();
 
-        public abstract List<(int, int)> GetLowerLeftPositions();
+        public abstract List<Position> GetLowerLeftPositions();
 
-        public abstract List<(int, int)> GetUpperLeftPositions();
+        public abstract List<Position> GetUpperLeftPositions();
 
-        public abstract List<(int, int)> GetLowerRightPositions();
+        public abstract List<Position> GetLowerRightPositions();
 
-        public abstract List<(int, int)> GetUpperRightPositions();
+        public abstract List<Position> GetUpperRightPositions();
 
         public virtual void OccupySquare(ChessSquare chessSquare)
         {
@@ -88,7 +88,7 @@ namespace ChessGame.model
             wasMoved = true;
         }
 
-        public virtual List<(int, int)> GetCapturePositions()
+        public virtual List<Position> GetCapturePositions()
         {
             return GetAvailablePositions();
         }

@@ -15,45 +15,45 @@ namespace ChessGame.model
 
         public override PieceType PieceType => PieceType.knight;
 
-        public override List<(int, int)> GetAvailablePositions()
+        public override List<Position> GetAvailablePositions()
         {
             return GetUpperLeftPositions().Concat(GetLowerLeftPositions()
                 .Concat(GetUpperRightPositions()).Concat(GetLowerRightPositions()))
                 .ToList();
         }
 
-        public override List<(int, int)> GetLowerLeftPositions()
+        public override List<Position> GetLowerLeftPositions()
         {
             return AddSingleSquarePositions(
-              (CurrentX - 1, CurrentY + 2),
-              (CurrentX - 2, CurrentY + 1),
+              new Position(CurrentX - 1, CurrentY + 2),
+              new Position(CurrentX - 2, CurrentY + 1),
               (CurrentX > 0 && CurrentY < boardSize - 1, CurrentX > 1 && CurrentY < boardSize)
             );
         }
 
-        public override List<(int, int)> GetUpperLeftPositions()
+        public override List<Position> GetUpperLeftPositions()
         {
             return AddSingleSquarePositions(
-             (CurrentX - 1, CurrentY - 2),
-             (CurrentX - 2, CurrentY - 1),
+             new Position(CurrentX - 1, CurrentY - 2),
+             new Position(CurrentX - 2, CurrentY - 1),
              (CurrentX > 0 && CurrentY > 1, CurrentX > 1 && CurrentY > 0)
             );
         }
 
-        public override List<(int, int)> GetLowerRightPositions()
+        public override List<Position> GetLowerRightPositions()
         {
             return AddSingleSquarePositions(
-             (CurrentX + 1, CurrentY + 2),
-             (CurrentX + 2, CurrentY + 1),
+             new Position(CurrentX + 1, CurrentY + 2),
+             new Position(CurrentX + 2, CurrentY + 1),
              (CurrentX < boardSize && CurrentY < boardSize - 1, CurrentX < boardSize - 1 && CurrentY < boardSize)
             );
         }
 
-        public override List<(int, int)> GetUpperRightPositions()
+        public override List<Position> GetUpperRightPositions()
         {
             return AddSingleSquarePositions(
-             (CurrentX + 1, CurrentY - 2),
-             (CurrentX + 2, CurrentY - 1),
+             new Position(CurrentX + 1, CurrentY - 2),
+             new Position(CurrentX + 2, CurrentY - 1),
              (CurrentX < boardSize && CurrentY > 1, CurrentX < boardSize - 1 && CurrentY > 0)
             );
         }

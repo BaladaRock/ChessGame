@@ -43,29 +43,29 @@ namespace ChessGame.model
             base.MovePiece(activeSquare);
         }
 
-        public override List<(int, int)> GetAvailablePositions()
+        public override List<Position> GetAvailablePositions()
         {
             return RookPiece.GetAvailablePositions().Concat(
                 bishopVersion.GetAvailablePositions())
                 .ToList();
         }
 
-        public override List<(int, int)> GetLowerLeftPositions()
+        public override List<Position> GetLowerLeftPositions()
         {
             return bishopVersion.GetLowerLeftPositions();
         }
 
-        public override List<(int, int)> GetUpperLeftPositions()
+        public override List<Position> GetUpperLeftPositions()
         {
             return bishopVersion.GetUpperLeftPositions();
         }
 
-        public override List<(int, int)> GetLowerRightPositions()
+        public override List<Position> GetLowerRightPositions()
         {
             return bishopVersion.GetLowerRightPositions();
         }
 
-        public override List<(int, int)> GetUpperRightPositions()
+        public override List<Position> GetUpperRightPositions()
         {
             return bishopVersion.GetUpperRightPositions();
         }

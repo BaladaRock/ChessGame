@@ -15,56 +15,56 @@ namespace ChessGame.model
 
         public override PieceType PieceType => PieceType.rook;
 
-        public override List<(int, int)> GetAvailablePositions()
+        public override List<Position> GetAvailablePositions()
         {
             return GetUpperLeftPositions().Concat(GetLowerLeftPositions()
                 .Concat(GetUpperRightPositions()).Concat(GetLowerRightPositions()))
                 .ToList();
         }
 
-        public override List<(int, int)> GetLowerLeftPositions()
+        public override List<Position> GetLowerLeftPositions()
         {
-            var positions = new List<(int, int)>(boardSize);
+            var positions = new List<Position>(boardSize);
 
             for (int i = CurrentX - 1; i >= 0; i--)
             {
-                positions.Add((i, CurrentY));
+                positions.Add(new Position(i, CurrentY));
             }
 
             return positions;
         }
 
-        public override List<(int, int)> GetUpperLeftPositions()
+        public override List<Position> GetUpperLeftPositions()
         {
-            var positions = new List<(int, int)>(boardSize);
+            var positions = new List<Position>(boardSize);
 
             for (int i = CurrentY - 1; i >= 0; i--)
             {
-                positions.Add((CurrentX, i));
+                positions.Add(new Position(CurrentX, i));
             }
 
             return positions;
         }
 
-        public override List<(int, int)> GetLowerRightPositions()
+        public override List<Position> GetLowerRightPositions()
         {
-            var positions = new List<(int, int)>(boardSize);
+            var positions = new List<Position>(boardSize);
 
             for (int i = CurrentY + 1; i <= boardSize; i++)
             {
-                positions.Add((CurrentX, i));
+                positions.Add(new Position(CurrentX, i));
             }
 
             return positions;
         }
 
-        public override List<(int, int)> GetUpperRightPositions()
+        public override List<Position> GetUpperRightPositions()
         {
-            var positions = new List<(int, int)>(boardSize);
+            var positions = new List<Position> (boardSize);
 
             for (int i = CurrentX + 1; i <= boardSize; i++)
             {
-                positions.Add((i, CurrentY));
+                positions.Add(new Position(i, CurrentY));
             }
 
             return positions;

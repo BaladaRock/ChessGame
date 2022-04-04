@@ -43,8 +43,8 @@ namespace ChessGame
                 IPiece activePiece = chessBoard.ActiveSquare.Piece;
 
                 // Update previously clicked piece image
-                (int, int) coordinates = chessBoard.GetLastActivePositions();
-                int oldIndex = (boardSize * coordinates.Item1) + coordinates.Item2;
+                Position coordinates = chessBoard.GetLastActivePositions();
+                int oldIndex = (boardSize * coordinates.X) + coordinates.Y;
                 chessBoardGraphics.Controls[oldIndex].BackgroundImage = null;
 
                 // Reset last active piece color
