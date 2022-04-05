@@ -49,7 +49,7 @@ namespace ChessGame.model
 
         public abstract IEnumerable<IEnumerable<Position>> GetAvailablePositions();
 
-        protected virtual IEnumerable<Position> GetLowerLeftDiagonal()
+        public virtual IEnumerable<Position> GetLowerLeftDiagonal()
         {
             var positions = new List<Position>(BoardSize);
 
@@ -61,7 +61,7 @@ namespace ChessGame.model
             return positions;
         }
 
-        protected virtual IEnumerable<Position> GetUpperLeftDiagonal()
+        public virtual IEnumerable<Position> GetUpperLeftDiagonal()
         {
             var positions = new List<Position>(BoardSize);
             for (var (x, y) = (CurrentX - 1, CurrentY - 1); (x >= 0 && y >= 0); x--, y--)
@@ -72,7 +72,7 @@ namespace ChessGame.model
             return positions;
         }
 
-        protected virtual IEnumerable<Position> GetLowerRightDiagonal()
+        public virtual IEnumerable<Position> GetLowerRightDiagonal()
         {
             var positions = new List<Position>(BoardSize);
 
@@ -84,7 +84,7 @@ namespace ChessGame.model
             return positions;
         }
 
-        protected virtual IEnumerable<Position> GetUpperRightDiagonal()
+        public virtual IEnumerable<Position> GetUpperRightDiagonal()
         {
             var positions = new List<Position>(BoardSize);
 
@@ -96,7 +96,7 @@ namespace ChessGame.model
             return positions;
         }
 
-        protected virtual IEnumerable<Position> GetLeftLine()
+        public virtual IEnumerable<Position> GetLeftLine()
         {
             var positions = new List<Position>(BoardSize);
 
@@ -108,7 +108,7 @@ namespace ChessGame.model
             return positions;
         }
 
-        protected virtual IEnumerable<Position> GetRightLine()
+        public virtual IEnumerable<Position> GetRightLine()
         {
             var positions = new List<Position>(BoardSize);
 
@@ -120,7 +120,7 @@ namespace ChessGame.model
             return positions;
         }
 
-        protected virtual IEnumerable<Position> GetUpperColumn()
+        public virtual IEnumerable<Position> GetUpperColumn()
         {
             var positions = new List<Position>(BoardSize);
 
@@ -132,7 +132,7 @@ namespace ChessGame.model
             return positions;
         }
 
-        protected virtual IEnumerable<Position> GetLowerColumn()
+        public virtual IEnumerable<Position> GetLowerColumn()
         {
             var positions = new List<Position>(BoardSize);
 

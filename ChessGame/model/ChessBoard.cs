@@ -12,6 +12,10 @@ namespace ChessGame.model
 
         private ChessSquare lastActive;
 
+        private Position kingPosition;
+
+        private ChessCalculator calculator;
+
         protected int boardSize;
 
         private bool piecePreviouslyClicked;
@@ -26,9 +30,23 @@ namespace ChessGame.model
             piecePreviouslyClicked = false;
             notFound = new Position(-1, -1);
             BuildChessBoard();
+            WhiteKingPosition = new Position(4, 7);
+            BlackKingPosition = new Position(4, 0);
+            calculator = new ChessCalculator(boardSize, boardSquares);
         }
 
         public ChessSquare ActiveSquare { get; set; }
+
+        public bool IsChecked { get; private set; }
+
+        internal Position WhiteKingPosition { get; private set; }
+
+        internal Position BlackKingPosition { get; private set; }
+
+        public IPiece GetActivePiece()
+        {
+            return ActiveSquare.Piece;
+        }
 
         public bool UpdatedAfterClick(int x, int y)
         {
@@ -45,16 +63,6 @@ namespace ChessGame.model
                 return piecePreviouslyClicked
                   && MoveIfLegal(freshlyClicked);
             }
-        }
-
-        private void BuildChessBoard()
-        {
-            BuildSquares(ColorType.white, ColorType.black);
-        }
-
-        public IPiece GetActivePiece()
-        {
-            return ActiveSquare.Piece;
         }
 
         public void MovePiece(IPiece chessPiece, ChessSquare activeSquare)
@@ -81,7 +89,12 @@ namespace ChessGame.model
             return lastActive == null ? notFound : lastActive.Position;
         }
 
-        private void BuildSquares(ColorType white, ColorType black)
+        private void BuildChessBoard()
+        {
+            BuildSquares(boardSquares, ColorType.white, ColorType.black);
+        }
+
+        private void BuildSquares(ChessSquare[,] boardSquares, ColorType white, ColorType black)
         {
             for (int i = 0; i < boardSize; i++)
             {
@@ -121,7 +134,42 @@ namespace ChessGame.model
             ActiveSquare = freshlyClicked;
             piecePreviouslyClicked = false;
             WriteMessage();
+
+            calculator.UpdateBoard(boardSquares);
+
+            kingPosition = playerToMove == ColorType.white ? WhiteKingPosition : BlackKingPosition;
+
+            if (calculator.KingIsChecked(lastActive, ActiveSquare, kingPosition))
+            {
+                IsChecked = true;
+                Console.WriteLine("Check!!!");
+            }
+
+            UpdateKingPosition();
             return CheckPromotion();
+        }
+
+        private void UpdateKingPosition()
+        {
+            var active = (ChessPiece)ActiveSquare.Piece;
+
+            if (active.PieceType != PieceType.king)
+            {
+                return;
+            }
+
+            var activePosition = ActiveSquare.Position;
+
+            if(playerToMove == ColorType.white)
+            {
+                BlackKingPosition = new Position(activePosition.X, activePosition.Y);
+            }
+            else
+            {
+                WhiteKingPosition = new Position(activePosition.X, activePosition.Y);
+            }
+
+            calculator.UpdateBoard(boardSquares);
         }
 
         private bool CheckPromotion()
@@ -175,6 +223,13 @@ namespace ChessGame.model
 
         private bool MoveIfLegal(ChessSquare freshlyClicked)
         {
+            if (IsChecked && calculator.CheckOutOfCheck(freshlyClicked, ActiveSquare, kingPosition))
+            {
+                Console.WriteLine("Please move out of check!!!");
+                return ResetState();
+            }
+
+            IsChecked = false;
             return CheckMultiplePositions((ChessPiece)ActiveSquare.Piece, freshlyClicked);
         }
 
@@ -230,7 +285,7 @@ namespace ChessGame.model
                 {
                     return false;
                 }
-                else if (FoundSquare(position, clicked.X, clicked.Y))
+                else if (position.Equals(clicked))
                 {
                     return ApplyMove(clickedSquare);
                 }
@@ -240,13 +295,12 @@ namespace ChessGame.model
 
         private bool CheckForOneCaptureDirection(ChessSquare clickedSquare, IEnumerable<Position> squares, ColorType pieceColor)
         {
-            bool foundFirst = false;
             Position found = notFound;
             Position clicked = clickedSquare.Position;
             foreach (var position in squares)
             {
                 var checkedSquare = boardSquares[position.X, position.Y];
-                if (!foundFirst && checkedSquare.IsOccupied())
+                if (checkedSquare.IsOccupied())
                 {
                     if (checkedSquare.Piece.Color == pieceColor)
                     {
@@ -254,7 +308,7 @@ namespace ChessGame.model
                     }
 
                     found = position;
-                    foundFirst = true;
+                    break;
                 }
             }
 

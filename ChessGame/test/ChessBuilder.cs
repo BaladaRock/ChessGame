@@ -72,12 +72,12 @@ namespace ChessGame.test
             var bishopSquare = chessBoard.GetSquare(4, 4);
             whiteBishop.OccupySquare(bishopSquare);
 
-            var bishopCaptures = whiteBishop.GetAvailablePositions().ToList();
+            var bishopCaptures = whiteBishop.GetCapturePositions().ToList();
             Console.WriteLine($"Count test: {bishopCaptures?.Count}");
 
             for (int i = 0; i < bishopCaptures?.Count; i++)
             {
-                foreach (var position in knightCaptures.ToList()[i])
+                foreach (var position in bishopCaptures.ToList()[i])
                 {
                     Console.WriteLine($"Bishop available capture moves: {position.X}, {position.Y}");
                 }
