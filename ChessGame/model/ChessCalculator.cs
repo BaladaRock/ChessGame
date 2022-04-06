@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ChessGame.model
@@ -23,27 +24,19 @@ namespace ChessGame.model
         {
             var activePiece = (ChessPiece)activeSquare.Piece;
 
-            return CheckedByDirectionMovement(activePiece, kingPosition);
+            return CheckedByActivePiece(activePiece, kingPosition);
         }
 
-        private bool CheckedByDirectionMovement(ChessPiece activePiece, Position kingPosition)
+        private bool CheckedByActivePiece(ChessPiece activePiece, Position kingPosition)
         {
             return activePiece.GetCapturePositions()
-                .Any(direction => CheckPositions(activePiece, direction, kingPosition));
+                .Any(direction => ContainsKingPosition(activePiece, direction, kingPosition));
         }
 
-        private bool CheckPositions(ChessPiece activePiece, IEnumerable<Position> direction, Position kingPosition)
+        private bool ContainsKingPosition(ChessPiece activePiece, IEnumerable<Position> direction, Position kingPosition)
         {
             foreach (var position in direction)
             {
-
-                // Extra check that treats pawn promotion index error
-                if (position.X == -1 || position.Y == -1)
-                {
-                    return false;
-                }
-
-
                 if (position.Equals(kingPosition))
                 {
                     forbiddenPositions = forbiddenPositions == null
@@ -55,13 +48,24 @@ namespace ChessGame.model
                     return true;
                 }
 
+                // Extra check that treats pawn promotion index error
+                if (CheckPromotion(position.Y))
+                {
+                    break;
+                }
+
                 if (boardSquares[position.X, position.Y].IsOccupied())
                 {
-                    return false;
+                    break;
                 }
             }
 
             return false;
+        }
+
+        private bool CheckPromotion(int toCheck)
+        {
+            return toCheck < 0 || toCheck > boardSize - 1;
         }
 
         internal void UpdateBoard(ChessSquare[,] boardSquares)
@@ -69,21 +73,27 @@ namespace ChessGame.model
             this.boardSquares = boardSquares;
         }
 
-        internal bool CheckOutOfCheck(ChessSquare activeSquare, ChessSquare lastActive, Position kingPosition)
+        internal bool IsNotOutOfCheck(ChessSquare activeSquare, ChessSquare lastActive, Position kingPosition)
         {
             var activePosition = activeSquare.Position;
             var lastPosition = lastActive.Position;
 
+            // Verifies that attacking piece has been captured
+            if(activePosition.Equals(attackingPiece.CurrentPosition))
+            {
+                return false;
+            }
+
             boardSquares[activePosition.X, activePosition.Y].OccupySquare(lastActive.Piece);
             boardSquares[lastPosition.X, lastPosition.Y].EmptySquare();
 
-            bool notInCheck = CheckedByDirectionMovement(attackingPiece, kingPosition);
+            bool stillInCheck = CheckedByActivePiece(attackingPiece, kingPosition);
 
             var lastPiece = boardSquares[activePosition.X, activePosition.Y].Piece;
             boardSquares[activePosition.X, activePosition.Y].EmptySquare();
             boardSquares[lastPosition.X, lastPosition.Y].OccupySquare(lastPiece);
 
-            return notInCheck;
+            return stillInCheck;
         }
     }
 }

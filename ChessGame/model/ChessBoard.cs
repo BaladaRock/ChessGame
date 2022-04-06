@@ -123,6 +123,14 @@ namespace ChessGame.model
                 return false;
             }
 
+            if (IsChecked && calculator.IsNotOutOfCheck(freshlyClicked, ActiveSquare, kingPosition))
+            {
+                Console.WriteLine($"Please move out of check!!! {kingPosition.X} {kingPosition.Y}");
+                return ResetState();
+            }
+
+            IsChecked = false;
+
             playerToMove = playerToMove == ColorType.white ? ColorType.black : ColorType.white;
             return UpdateState(freshlyClicked);
         }
@@ -223,13 +231,13 @@ namespace ChessGame.model
 
         private bool MoveIfLegal(ChessSquare freshlyClicked)
         {
-            if (IsChecked && calculator.CheckOutOfCheck(freshlyClicked, ActiveSquare, kingPosition))
-            {
-                Console.WriteLine("Please move out of check!!!");
-                return ResetState();
-            }
+            //if (IsChecked && calculator.IsOutOfCheck(freshlyClicked, ActiveSquare, kingPosition))
+            //{
+            //    Console.WriteLine($"Please move out of check!!! {kingPosition.X} {kingPosition.Y}");
+            //    return ResetState();
+            //}
 
-            IsChecked = false;
+            //IsChecked = false;
             return CheckMultiplePositions((ChessPiece)ActiveSquare.Piece, freshlyClicked);
         }
 
@@ -326,8 +334,8 @@ namespace ChessGame.model
         private void WriteMessage()
         {
             Console.WriteLine("Made a move!");
-            Console.WriteLine($"Currently active: {ActiveSquare.Position}");
-            Console.WriteLine($"Last active: {lastActive.Position}");
+            Console.WriteLine($"Currently active: {ActiveSquare.Position.X} {ActiveSquare.Position.Y}");
+            Console.WriteLine($"Last active: {lastActive.Position.X} {lastActive.Position.Y}");
         }
 
         private void SwapColors(ref ColorType firstColor, ref ColorType secondColor)
