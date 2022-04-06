@@ -51,97 +51,42 @@ namespace ChessGame.model
 
         public virtual IEnumerable<Position> GetLowerLeftDiagonal()
         {
-            var positions = new List<Position>(BoardSize);
-
-            for (var (x, y) = (CurrentX - 1, CurrentY + 1); (x >= 0 && y <= BoardSize); x--, y++)
-            {
-                positions.Add(new Position(x, y));
-            }
-
-            return positions;
+            return PositionsCalculator.GetLowerLeftDiagonal(BoardSize, CurrentX, CurrentY);
         }
 
         public virtual IEnumerable<Position> GetUpperLeftDiagonal()
         {
-            var positions = new List<Position>(BoardSize);
-            for (var (x, y) = (CurrentX - 1, CurrentY - 1); (x >= 0 && y >= 0); x--, y--)
-            {
-                positions.Add(new Position(x, y));
-            }
-
-            return positions;
+            return PositionsCalculator.GetUpperLeftDiagonal(BoardSize, CurrentX, CurrentY);
         }
 
         public virtual IEnumerable<Position> GetLowerRightDiagonal()
         {
-            var positions = new List<Position>(BoardSize);
-
-            for (var (x, y) = (CurrentX + 1, CurrentY + 1); (x <= BoardSize && y <= BoardSize); x++, y++)
-            {
-                positions.Add(new Position(x, y));
-            }
-
-            return positions;
+            return PositionsCalculator.GetLowerRightDiagonal(BoardSize, CurrentX, CurrentY);
         }
 
         public virtual IEnumerable<Position> GetUpperRightDiagonal()
         {
-            var positions = new List<Position>(BoardSize);
-
-            for (var (x, y) = (CurrentX + 1, CurrentY - 1); (x <= BoardSize && y >= 0); x++, y--)
-            {
-                positions.Add(new Position(x, y));
-            }
-
-            return positions;
+            return PositionsCalculator.GetUpperRightDiagonal(BoardSize, CurrentX, CurrentY);
         }
 
         public virtual IEnumerable<Position> GetLeftLine()
         {
-            var positions = new List<Position>(BoardSize);
-
-            for (int i = CurrentX - 1; i >= 0; i--)
-            {
-                positions.Add(new Position(i, CurrentY));
-            }
-
-            return positions;
+            return PositionsCalculator.GetLeftLine(BoardSize, CurrentX, CurrentY);
         }
 
         public virtual IEnumerable<Position> GetRightLine()
         {
-            var positions = new List<Position>(BoardSize);
-
-            for (int i = CurrentX + 1; i <= BoardSize; i++)
-            {
-                positions.Add(new Position(i, CurrentY));
-            }
-
-            return positions;
+            return PositionsCalculator.GetRightLine(BoardSize, CurrentX, CurrentY);
         }
 
         public virtual IEnumerable<Position> GetUpperColumn()
         {
-            var positions = new List<Position>(BoardSize);
-
-            for (int i = CurrentY - 1; i >= 0; i--)
-            {
-                positions.Add(new Position(CurrentX, i));
-            }
-
-            return positions;
+            return PositionsCalculator.GetUpperColumn(BoardSize, CurrentX, CurrentY);
         }
 
         public virtual IEnumerable<Position> GetLowerColumn()
         {
-            var positions = new List<Position>(BoardSize);
-
-            for (int i = CurrentY + 1; i <= BoardSize; i++)
-            {
-                positions.Add(new Position(CurrentX, i));
-            }
-
-            return positions;
+            return PositionsCalculator.GetLowerColumn(BoardSize, CurrentX, CurrentY);
         }
 
         public virtual void OccupySquare(ChessSquare chessSquare)

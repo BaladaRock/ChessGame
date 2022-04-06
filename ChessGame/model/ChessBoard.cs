@@ -119,13 +119,20 @@ namespace ChessGame.model
         {
             if (playerToMove != lastActive.Piece.Color || CheckDoubleMove())
             {
-                ResetState();
-                return false;
+                return ResetState();
             }
 
             if (IsChecked && calculator.IsNotOutOfCheck(freshlyClicked, ActiveSquare, kingPosition))
             {
                 Console.WriteLine($"Please move out of check!!! {kingPosition.X} {kingPosition.Y}");
+                return ResetState();
+            }
+
+            kingPosition = playerToMove == ColorType.white ? WhiteKingPosition : BlackKingPosition;
+
+            if (calculator.KingWouldBeInCheck(freshlyClicked, ActiveSquare, kingPosition))
+            {
+                Console.WriteLine($"Cannot apply move! King would be in check!! {kingPosition.X} {kingPosition.Y}");
                 return ResetState();
             }
 
@@ -231,13 +238,6 @@ namespace ChessGame.model
 
         private bool MoveIfLegal(ChessSquare freshlyClicked)
         {
-            //if (IsChecked && calculator.IsOutOfCheck(freshlyClicked, ActiveSquare, kingPosition))
-            //{
-            //    Console.WriteLine($"Please move out of check!!! {kingPosition.X} {kingPosition.Y}");
-            //    return ResetState();
-            //}
-
-            //IsChecked = false;
             return CheckMultiplePositions((ChessPiece)ActiveSquare.Piece, freshlyClicked);
         }
 
@@ -291,7 +291,7 @@ namespace ChessGame.model
 
                 if (checkedSquare.IsOccupied())
                 {
-                    return false;
+                    break;
                 }
                 else if (position.Equals(clicked))
                 {

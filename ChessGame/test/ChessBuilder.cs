@@ -69,7 +69,7 @@ namespace ChessGame.test
 
             //// Test bishop movement
             var whiteBishop = new Bishop(ColorType.white);
-            var bishopSquare = chessBoard.GetSquare(4, 4);
+            var bishopSquare = chessBoard.GetSquare(5, 1);
             whiteBishop.OccupySquare(bishopSquare);
 
             var bishopCaptures = whiteBishop.GetCapturePositions().ToList();
