@@ -44,7 +44,7 @@ namespace ChessGame.test
 
             //// Test knight movement
             var blackKnight = new Knight(ColorType.black);
-            var knightSquare = chessBoard.GetSquare(6, 6);
+            var knightSquare = chessBoard.GetSquare(4, 6);
             blackKnight.OccupySquare(knightSquare);
 
             var knightMoves = blackKnight.GetAvailablePositions().ToList();

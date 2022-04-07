@@ -85,25 +85,27 @@ namespace ChessGame.model
 
         internal bool IsNotOutOfCheck(ChessSquare activeSquare, ChessSquare lastActive, Position kingPosition)
         {
+            bool stillInCheck = false;
             var activePosition = activeSquare.Position;
             var lastPosition = lastActive.Position;
 
-            // Verifies that attacking piece has been captured
             if (activePosition.Equals(attackingPiece.CurrentPosition))
             {
                 return false;
             }
 
-            // return !HasBlockedCheck(activePosition);
-
-            // Emulate wanted move
             boardSquares[activePosition.X, activePosition.Y].OccupySquare(lastActive.Piece);
             boardSquares[lastPosition.X, lastPosition.Y].EmptySquare();
 
-            // Store result in a variable
-            bool stillInCheck = CheckedByActivePiece(attackingPiece, kingPosition);
+            if (activeSquare.Piece.PieceType == PieceType.king)
+            {
+                stillInCheck = KingCanMove(activePosition, activeSquare.Piece.Color);
+            }
+            else
+            {
+                stillInCheck = CheckedByActivePiece(attackingPiece, kingPosition);
+            }
 
-            // Undo emulated move
             var lastPiece = boardSquares[activePosition.X, activePosition.Y].Piece;
             boardSquares[activePosition.X, activePosition.Y].EmptySquare();
             boardSquares[lastPosition.X, lastPosition.Y].OccupySquare(lastPiece);
@@ -111,56 +113,55 @@ namespace ChessGame.model
             return stillInCheck;
         }
 
-        private bool HasBlockedCheck(Position activePosition)
-        {
-            return forbiddenPositions.Any(position => position.Equals(activePosition));
-        }
-
-        internal bool KingWouldBeInCheck(ChessSquare activeSquare, ChessSquare lastActive, Position kingPosition)
+        internal bool KingWouldBeChecked(ChessSquare activeSquare, ChessSquare lastActive, Position kingPosition)
         {
             var activePosition = activeSquare.Position;
             var lastPosition = lastActive.Position;
-            //var temp = new Position(kingPosition.X, kingPosition.Y);
+            bool wouldBeInCheck = false;
 
-
-            //// First, emulate the wanted move
             boardSquares[activePosition.X, activePosition.Y].OccupySquare(lastActive.Piece);
             boardSquares[lastPosition.X, lastPosition.Y].EmptySquare();
 
-            ////Separately treat the case when the piece moved is actually the king
-            //if (lastActive.Piece.PieceType == PieceType.king)
-            //{
-            //    kingWasMoved = true;
-            //    kingPosition = new Position(activePosition.X, activePosition.Y);
-            //}
-
-            // Get king position
-
-            // Deduce the direction the king could be in check, from the relation between the wanted to move piece
-            // and king's position
-
-            // Then, check for enemy pieces, on the optained direction
-
-            IEnumerable<Position> enemyCheckersPositions = GetEnemySquares(kingPosition, lastPosition);
-            foreach (var element in enemyCheckersPositions)
+            if (activeSquare.Piece.PieceType == PieceType.king)
             {
-                Console.WriteLine($"{element.X} {element.Y}");
+                wouldBeInCheck = KingCanMove(activePosition, activeSquare.Piece.Color);
+            }
+            else
+            {
+                wouldBeInCheck = CheckEnemyCheckers(
+                    GetEnemySquares(kingPosition, lastPosition),
+                    kingPosition,
+                    activeSquare.Piece.Color
+                    );
             }
 
-            // Store result in a variable
-            bool wouldBeInCheck = CheckEnemyCheckers(enemyCheckersPositions, kingPosition, activeSquare.Piece.Color);
-
-            // Undo emulated move and king position update
             var lastPiece = boardSquares[activePosition.X, activePosition.Y].Piece;
             boardSquares[activePosition.X, activePosition.Y].EmptySquare();
             boardSquares[lastPosition.X, lastPosition.Y].OccupySquare(lastPiece);
-            //if(kingWasMoved)
-            //{
-            //    kingPosition = temp;
-            //    kingWasMoved = false;
-            //}
 
             return wouldBeInCheck;
+        }
+
+        private bool KingCanMove(Position activePosition, ColorType color)
+        {
+            var knightSquare = new ChessSquare(activePosition, color);
+            Knight knightPiece = new Knight(color);
+            knightPiece.OccupySquare(knightSquare);
+
+            var allDirections = new[]
+            {
+                PositionsCalculator.GetUpperLeftDiagonal(boardSize -1, activePosition.X, activePosition.Y),
+                PositionsCalculator.GetLowerLeftDiagonal(boardSize -1, activePosition.X, activePosition.Y),
+                PositionsCalculator.GetUpperRightDiagonal(boardSize -1, activePosition.X, activePosition.Y),
+                PositionsCalculator.GetLowerRightDiagonal(boardSize -1, activePosition.X, activePosition.Y),
+                PositionsCalculator.GetLeftLine(boardSize -1, activePosition.X, activePosition.Y),
+                PositionsCalculator.GetUpperColumn(boardSize -1, activePosition.X, activePosition.Y),
+                PositionsCalculator.GetRightLine(boardSize -1, activePosition.X, activePosition.Y),
+                PositionsCalculator.GetLowerColumn(boardSize -1, activePosition.X, activePosition.Y),
+            }
+            .Union(knightSquare.Piece.GetAvailablePositions());
+
+            return allDirections.Any(direction => CheckEnemyCheckers(direction, activePosition, color));
         }
 
         private bool CheckEnemyCheckers(IEnumerable<Position> enemyCheckersPositions, Position kingPosition, ColorType ownColor)

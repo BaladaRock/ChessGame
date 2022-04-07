@@ -130,7 +130,7 @@ namespace ChessGame.model
 
             kingPosition = playerToMove == ColorType.white ? WhiteKingPosition : BlackKingPosition;
 
-            if (calculator.KingWouldBeInCheck(freshlyClicked, ActiveSquare, kingPosition))
+            if (calculator.KingWouldBeChecked(freshlyClicked, ActiveSquare, kingPosition))
             {
                 Console.WriteLine($"Cannot apply move! King would be in check!! {kingPosition.X} {kingPosition.Y}");
                 return ResetState();
@@ -161,6 +161,9 @@ namespace ChessGame.model
             }
 
             UpdateKingPosition();
+
+            Console.WriteLine($"{playerToMove} to move!");
+
             return CheckPromotion();
         }
 
