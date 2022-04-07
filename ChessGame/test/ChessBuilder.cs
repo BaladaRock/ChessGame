@@ -44,7 +44,7 @@ namespace ChessGame.test
 
             //// Test knight movement
             var blackKnight = new Knight(ColorType.black);
-            var knightSquare = chessBoard.GetSquare(6, 6);
+            var knightSquare = chessBoard.GetSquare(4, 6);
             blackKnight.OccupySquare(knightSquare);
 
             var knightMoves = blackKnight.GetAvailablePositions().ToList();
@@ -69,15 +69,15 @@ namespace ChessGame.test
 
             //// Test bishop movement
             var whiteBishop = new Bishop(ColorType.white);
-            var bishopSquare = chessBoard.GetSquare(4, 4);
+            var bishopSquare = chessBoard.GetSquare(5, 1);
             whiteBishop.OccupySquare(bishopSquare);
 
-            var bishopCaptures = whiteBishop.GetAvailablePositions().ToList();
+            var bishopCaptures = whiteBishop.GetCapturePositions().ToList();
             Console.WriteLine($"Count test: {bishopCaptures?.Count}");
 
             for (int i = 0; i < bishopCaptures?.Count; i++)
             {
-                foreach (var position in knightCaptures.ToList()[i])
+                foreach (var position in bishopCaptures.ToList()[i])
                 {
                     Console.WriteLine($"Bishop available capture moves: {position.X}, {position.Y}");
                 }

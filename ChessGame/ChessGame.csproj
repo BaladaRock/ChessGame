@@ -48,7 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="model\ChessCalculator.cs" />
     <Compile Include="model\Position.cs" />
+    <Compile Include="model\PositionsCalculator.cs" />
     <Compile Include="view\ChessBoard.cs" />
     <Compile Include="view\FormChessBoard.cs">
       <SubType>Form</SubType>

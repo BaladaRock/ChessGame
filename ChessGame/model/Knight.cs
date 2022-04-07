@@ -28,7 +28,7 @@ namespace ChessGame.model
             };
         }
 
-        protected override IEnumerable<Position> GetLowerLeftDiagonal()
+        public override IEnumerable<Position> GetLowerLeftDiagonal()
         {
             return AddSingleSquarePositions(
               new Position(CurrentX - 1, CurrentY + 2),
@@ -36,7 +36,7 @@ namespace ChessGame.model
             );
         }
 
-        protected override IEnumerable<Position> GetLeftLine()
+        public override IEnumerable<Position> GetLeftLine()
         {
             return AddSingleSquarePositions(
               new Position(CurrentX - 2, CurrentY + 1),
@@ -44,7 +44,7 @@ namespace ChessGame.model
             );
         }
 
-        protected override IEnumerable<Position> GetUpperLeftDiagonal()
+        public override IEnumerable<Position> GetUpperLeftDiagonal()
         {
             return AddSingleSquarePositions(
               new Position(CurrentX - 1, CurrentY - 2),
@@ -52,7 +52,7 @@ namespace ChessGame.model
             );
         }
 
-        protected override IEnumerable<Position> GetUpperColumn()
+        public override IEnumerable<Position> GetUpperColumn()
         {
             return AddSingleSquarePositions(
               new Position(CurrentX - 2, CurrentY - 1),
@@ -60,7 +60,7 @@ namespace ChessGame.model
             );
         }
 
-        protected override IEnumerable<Position> GetLowerColumn()
+        public override IEnumerable<Position> GetLowerColumn()
         {
             return AddSingleSquarePositions(
               new Position(CurrentX + 1, CurrentY + 2),
@@ -68,7 +68,7 @@ namespace ChessGame.model
             );
         }
 
-        protected override IEnumerable<Position> GetLowerRightDiagonal()
+        public override IEnumerable<Position> GetLowerRightDiagonal()
         {
             return AddSingleSquarePositions(
               new Position(CurrentX + 2, CurrentY + 1),
@@ -76,7 +76,7 @@ namespace ChessGame.model
             );
         }
 
-        protected override IEnumerable<Position> GetUpperRightDiagonal()
+        public override IEnumerable<Position> GetUpperRightDiagonal()
         {
             return AddSingleSquarePositions(
               new Position(CurrentX + 1, CurrentY - 2),
@@ -84,7 +84,7 @@ namespace ChessGame.model
             );
         }
 
-        protected override IEnumerable<Position> GetRightLine()
+        public override IEnumerable<Position> GetRightLine()
         {
             return AddSingleSquarePositions(
               new Position(CurrentX + 2, CurrentY - 1),
