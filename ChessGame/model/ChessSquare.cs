@@ -4,7 +4,7 @@
     {
         public Position Position { get; }
 
-        public IPiece Piece { get; private set; }
+        public ChessPiece Piece { get; private set; }
 
         public ColorType Type { get; }
 
@@ -24,7 +24,7 @@
             Piece = null;
         }
 
-        public void OccupySquare(IPiece newPiece)
+        public void OccupySquare(ChessPiece newPiece)
         {
             Piece = newPiece;
         }
