@@ -169,7 +169,7 @@ namespace ChessGame.model
 
         private void UpdateKingPosition()
         {
-            var active = (ChessPiece)ActiveSquare.Piece;
+            var active = ActiveSquare.Piece;
 
             if (active.PieceType != PieceType.king)
             {
@@ -178,7 +178,7 @@ namespace ChessGame.model
 
             var activePosition = ActiveSquare.Position;
 
-            if(playerToMove == ColorType.white)
+            if (playerToMove == ColorType.white)
             {
                 BlackKingPosition = new Position(activePosition.X, activePosition.Y);
             }
@@ -192,7 +192,7 @@ namespace ChessGame.model
 
         private bool CheckPromotion()
         {
-            var active = (ChessPiece)ActiveSquare.Piece;
+            var active = ActiveSquare.Piece;
             if (active.PieceType != PieceType.pawn)
             {
                 return true;
@@ -203,7 +203,7 @@ namespace ChessGame.model
 
         private bool CheckDoubleMove()
         {
-            var active = (ChessPiece)ActiveSquare.Piece;
+            var active = ActiveSquare.Piece;
             if (active.PieceType != PieceType.pawn)
             {
                 return false;
@@ -241,7 +241,7 @@ namespace ChessGame.model
 
         private bool MoveIfLegal(ChessSquare freshlyClicked)
         {
-            return CheckMultiplePositions((ChessPiece)ActiveSquare.Piece, freshlyClicked);
+            return CheckMultiplePositions(ActiveSquare.Piece, freshlyClicked);
         }
 
         private bool FoundSquare(Position position, int x, int y)
@@ -251,8 +251,8 @@ namespace ChessGame.model
 
         private bool CheckCaptureSquares(ChessSquare freshlyClicked)
         {
-            ChessPiece pieceToCheck = (ChessPiece)freshlyClicked.Piece;
-            ChessPiece activePiece = (ChessPiece)ActiveSquare.Piece;
+            ChessPiece pieceToCheck = freshlyClicked.Piece;
+            ChessPiece activePiece = ActiveSquare.Piece;
             if (pieceToCheck.Color == activePiece.Color)
             {
                 return false;

@@ -26,7 +26,7 @@ namespace ChessGame.model
 
         internal bool KingIsChecked(ChessSquare lastActive, ChessSquare activeSquare, Position kingPosition)
         {
-            var activePiece = (ChessPiece)activeSquare.Piece;
+            var activePiece = activeSquare.Piece;
 
             return CheckedByActivePiece(activePiece, kingPosition);
         }
