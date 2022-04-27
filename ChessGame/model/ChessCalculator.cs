@@ -198,28 +198,28 @@ namespace ChessGame.model
 
             switch (kingX)
             {
-                case int x when kingY == movedY && kingX > movedX:
+                case int _ when kingY == movedY && kingX > movedX:
                     return PositionsCalculator.GetLeftLine(boardSize - 1, movedX, movedY);
 
-                case int x when kingY == movedY && kingX < movedX:
+                case int _ when kingY == movedY && kingX < movedX:
                     return PositionsCalculator.GetRightLine(boardSize - 1, movedX, movedY);
 
-                case int x when kingX == movedX && kingY > movedY:
+                case int _ when kingX == movedX && kingY > movedY:
                     return PositionsCalculator.GetUpperColumn(boardSize - 1, movedX, movedY);
 
-                case int x when kingX == movedX && kingY < movedY:
+                case int _ when kingX == movedX && kingY < movedY:
                     return PositionsCalculator.GetLowerColumn(boardSize - 1, movedX, movedY);
 
-                case int x when kingX > movedX && kingY < movedY:
+                case int _ when kingX > movedX && kingY < movedY:
                     return PositionsCalculator.GetLowerLeftDiagonal(boardSize - 1, movedX, movedY);
 
-                case int x when kingX > movedX && kingY > movedY:
+                case int _ when kingX > movedX && kingY > movedY:
                     return PositionsCalculator.GetUpperLeftDiagonal(boardSize - 1, movedX, movedY);
 
-                case int x when kingX < movedX && kingY < movedY:
+                case int _ when kingX < movedX && kingY < movedY:
                     return PositionsCalculator.GetLowerRightDiagonal(boardSize - 1, movedX, movedY);
 
-                case int x when kingX < movedX && kingY > movedY:
+                case int _ when kingX < movedX && kingY > movedY:
                     return PositionsCalculator.GetUpperRightDiagonal(boardSize - 1, movedX, movedY);
 
                 default:
