@@ -343,9 +343,7 @@ namespace ChessGame.model
 
         private void SwapColors(ref ColorType firstColor, ref ColorType secondColor)
         {
-            var tempColor = firstColor;
-            firstColor = secondColor;
-            secondColor = tempColor;
+            (secondColor, firstColor) = (firstColor, secondColor);
         }
     }
 }

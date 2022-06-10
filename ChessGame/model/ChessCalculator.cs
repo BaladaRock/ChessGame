@@ -37,11 +37,11 @@ namespace ChessGame.model
                 .Any(direction => ContainsKingPosition(activePiece, direction, kingPosition));
         }
 
-        private bool ContainsKingPosition(ChessPiece activePiece, IEnumerable<Position> direction, Position kingPosition)
+        private bool ContainsKingPosition(ChessPiece activePiece, IEnumerable<Position> direction, Position enemyKingPosition)
         {
             foreach (var position in direction)
             {
-                if (position.Equals(kingPosition))
+                if (position.Equals(enemyKingPosition))
                 {
                     forbiddenPositions = direction;
 

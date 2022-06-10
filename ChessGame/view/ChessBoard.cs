@@ -194,7 +194,7 @@ namespace ChessGame
         internal void BuildChessBoard(int size, Color firstSquareColor, Color secondSquareColor)
         {
             Size = size;
-            chessSquares = new ChessGame.model.ChessBoard(Size);
+            chessSquares = new model.ChessBoard(Size);
 
             for (int i = 0; i < Size; i++)
             {
