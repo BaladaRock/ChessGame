@@ -221,9 +221,7 @@ namespace ChessGame
 
         private void SwapColors(ref Color firstColor, ref Color secondColor)
         {
-            Color tempColor = firstColor;
-            firstColor = secondColor;
-            secondColor = tempColor;
+            (secondColor, firstColor) = (firstColor, secondColor);
         }
     }
 }
