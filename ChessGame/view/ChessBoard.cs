@@ -43,6 +43,7 @@ namespace ChessGame
             this.upperMargin = upperMargin;
             gutterLength = leftMargin * KingIndex;
             rectangleLength = (BishopLeftIndex * gutterLength) + (KingIndex * borderThickness);
+            chessGame = new controller.ChessGame(Size);
             DrawOutline(borderThickness);
         }
 
@@ -92,14 +93,12 @@ namespace ChessGame
 
             var imageColor = colorType == blackColor ? Properties.Resources.black_king : Properties.Resources.white_king;
             AddPieceAndImage(rowIndex, columnIndex, "king", colorType, imageColor);
-            //AddPieceAndImage(rowIndex, columnIndex, new King(colorType == blackColor ? ColorType.black : ColorType.white), imageColor);
         }
 
         private void AddPieceAndImage(int rowIndex, int columnIndex, string pieceToPlace, string color, Bitmap imageColor)
         {
             InsertImage(rowIndex, columnIndex, imageColor);
             chessGame.OccupySquare(pieceToPlace, color, rowIndex, columnIndex);
-            //newKing.OccupySquare(chessBoard.GetSquare(rowIndex, columnIndex));
         }
 
         private void AddQueen(int rowIndex, int columnIndex, string colorType = blackColor)
@@ -111,8 +110,6 @@ namespace ChessGame
 
             var imageColor = colorType == blackColor ? Properties.Resources.black_queen : Properties.Resources.white_queen;
             AddPieceAndImage(rowIndex, columnIndex, "queen", colorType, imageColor);
-
-            //AddPieceAndImage(rowIndex, columnIndex, new Queen(colorType == blackColor ? ColorType.black : ColorType.white), imageColor);
         }
 
         private void AddBishops(int rowIndex, int columnIndex, string colorType = blackColor)
@@ -124,7 +121,6 @@ namespace ChessGame
 
             var imageColor = colorType == blackColor ? Properties.Resources.black_bishop : Properties.Resources.white_bishop;
             AddPieceAndImage(rowIndex, columnIndex, "bishop", colorType, imageColor);
-            //AddPieceAndImage(rowIndex, columnIndex, new Bishop(colorType == blackColor ? ColorType.black : ColorType.white), imageColor);
         }
 
         private void AddKnights(int rowIndex, int columnIndex, string colorType = blackColor)
@@ -136,7 +132,6 @@ namespace ChessGame
 
             var imageColor = colorType == blackColor ? Properties.Resources.black_knight : Properties.Resources.white_knight;
             AddPieceAndImage(rowIndex, columnIndex, "knight", colorType, imageColor);
-            //AddPieceAndImage(rowIndex, columnIndex, new Knight(colorType == blackColor ? ColorType.black : ColorType.white), imageColor);
         }
 
         private void AddRooks(int rowIndex, int columnIndex, string colorType = blackColor)
@@ -148,7 +143,6 @@ namespace ChessGame
 
             var imageColor = colorType == blackColor ? Properties.Resources.black_rook : Properties.Resources.white_rook;
             AddPieceAndImage(rowIndex, columnIndex, "rook", colorType, imageColor);
-            //AddPieceAndImage(rowIndex, columnIndex, new Rook(colorType == blackColor ? ColorType.black : ColorType.white), imageColor);
         }
 
         private void AddBlackBackPieces(int rowIndex, int columnIndex)
@@ -174,7 +168,6 @@ namespace ChessGame
         {
             var imageColor = colorType == blackColor ? Properties.Resources.black_pawn : Properties.Resources.white_pawn;
             AddPieceAndImage(rowIndex, columnIndex, "pawn", colorType, imageColor);
-            //AddPieceAndImage(rowIndex, columnIndex, new Pawn(colorType == blackColor ? ColorType.black : ColorType.white), imageColor);
         }
 
         private void InsertImage(int rowIndex, int columnIndex, Bitmap pieceImage)
@@ -202,9 +195,7 @@ namespace ChessGame
         internal void BuildChessBoard(int size, Color firstSquareColor, Color secondSquareColor)
         {
             Size = size;
-
-            var chessBoard = new controller.ChessGame();
-            chessBoard.BuildChessGame(Size);
+            chessGame.BuildChessGame(Size);
 
             for (int i = 0; i < Size; i++)
             {
@@ -217,7 +208,7 @@ namespace ChessGame
                         BackColor = j % 2 == 0 ? firstSquareColor : secondSquareColor
                     };
 
-                    var customSquare = new CustomChessSquare(chessBoard, chessSquare, squares, Size)
+                    var customSquare = new CustomChessSquare(chessGame, chessSquare, squares, Size)
                     {
                         X = i,
                         Y = j

@@ -13,6 +13,12 @@ namespace ChessGame.controller
 
         public int BoardSize { get; private set; }
 
+        public ChessGame(int gameSize)
+        {
+            BoardSize = gameSize;
+            board = new model.ChessBoard(BoardSize);
+        }
+
         internal void OccupySquare(string piece, string pieceColor, int rowIndex, int columnIndex)
         {
             ChessPiece pieceToAdd = BuildPiece(piece, pieceColor);
@@ -20,7 +26,25 @@ namespace ChessGame.controller
         }
         private ChessPiece BuildPiece(string piece, string pieceColor)
         {
-            throw new NotImplementedException();
+            ColorType color = pieceColor == "white" ? ColorType.white : ColorType.black;
+
+            switch(piece)
+            {
+                case "pawn":
+                    return new Pawn(color);
+                case "bishop":
+                    return new Bishop(color);
+                case "knight":
+                    return new Knight(color);
+                case "king":
+                    return new King(color);
+                case "queen":
+                    return new Queen(color);
+                case "rook":
+                    return new Rook(color);
+                default:
+                    return new Pawn(color);
+            }
         }
 
         internal bool UpdatedAfterClick(int x, int y)
