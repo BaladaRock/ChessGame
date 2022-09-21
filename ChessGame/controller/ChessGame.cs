@@ -31,24 +31,32 @@ namespace ChessGame.controller
             switch(piece)
             {
                 case "pawn":
-                    return new Pawn(color);
+                    return new Pawn(color, BoardSize);
                 case "bishop":
-                    return new Bishop(color);
+                    return new Bishop(color, BoardSize);
                 case "knight":
-                    return new Knight(color);
+                    return new Knight(color, BoardSize);
                 case "king":
-                    return new King(color);
+                    return new King(color, BoardSize);
                 case "queen":
-                    return new Queen(color);
+                    return new Queen(color, BoardSize);
                 case "rook":
-                    return new Rook(color);
+                    return new Rook(color, BoardSize);
                 default:
-                    return new Pawn(color);
+                    return new Pawn(color, BoardSize);
             }
         }
 
         internal bool UpdatedAfterClick(int x, int y)
         {
+            //var pieceHasMoved = board.UpdatedAfterClick(x, y);
+
+            //if (pieceHasMoved)
+            //{
+            //    board.AppplyMove(x, y);
+            //    board.CheckPromotion();
+            //    board.CheckIsInCheck();
+            //}
             return board.UpdatedAfterClick(x, y);
         }
 

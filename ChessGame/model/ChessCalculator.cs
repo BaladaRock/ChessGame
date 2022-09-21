@@ -64,10 +64,10 @@ namespace ChessGame.model
                     break;
                 }
 
-                if (boardSquares[position.X, position.Y].IsOccupied())
-                {
-                    break;
-                }
+                //if (boardSquares[position.X, position.Y].IsOccupied())
+                //{
+                //    break;
+                //}
             }
 
             return false;
@@ -145,7 +145,7 @@ namespace ChessGame.model
         private bool KingCanMove(Position activePosition, ColorType color)
         {
             var knightSquare = new ChessSquare(activePosition, color);
-            Knight knightPiece = new Knight(color);
+            Knight knightPiece = new Knight(color, boardSize);
             knightPiece.OccupySquare(knightSquare);
 
             var allDirections = new[]

@@ -6,7 +6,7 @@ namespace ChessGame.model
     {
         private readonly int boardSize;
 
-        public Knight(ColorType color) : base(color)
+        public Knight(ColorType color, int size) : base(color, size)
         {
             boardSize = BoardSize;
             Movement = MovementType.singleSquare;
