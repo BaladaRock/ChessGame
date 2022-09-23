@@ -10,3 +10,6 @@ ChessGame/obj/Debug/
 ChessTests/bin/
 
 ChessTests/obj/
+
+*.v2
+*.vs
