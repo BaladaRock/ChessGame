@@ -10,3 +10,7 @@ ChessTests/bin/
 ChessTests/obj/
 
 *.v2
+
+.vs/ChessGame/FileContentIndex/
+
+.vs/ChessGame/v17/
