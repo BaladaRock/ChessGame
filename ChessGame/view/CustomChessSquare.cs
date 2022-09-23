@@ -7,7 +7,7 @@ namespace ChessGame
 {
     public class CustomChessSquare
     {
-        private readonly model.ChessBoard chessBoard;
+        private readonly controller.ChessGame chessGame;
 
         private readonly FormChessBoard chessBoardGraphics;
 
@@ -17,10 +17,10 @@ namespace ChessGame
 
         public Color OriginalColor { get; set; }
 
-        public CustomChessSquare(model.ChessBoard chessBoard, PictureBox square, FormChessBoard chessBoardGraphics, int boardSize)
+        internal CustomChessSquare(controller.ChessGame chessBoard, PictureBox square, FormChessBoard chessBoardGraphics, int boardSize)
         {
             this.chessBoardGraphics = chessBoardGraphics;
-            this.chessBoard = chessBoard;
+            this.chessGame = chessBoard;
             this.boardSize = boardSize;
             OriginalColor = square.BackColor;
             square.Click += PicureBox_OnClick;
@@ -38,12 +38,12 @@ namespace ChessGame
             //PictureBox temp = (PictureBox)sender;
             int freshIndex = (boardSize * X) + Y;
 
-            if (chessBoard.UpdatedAfterClick(X, Y))
+            if (chessGame.UpdatedAfterClick(X, Y))
             {
-                IPiece activePiece = chessBoard.ActiveSquare.Piece;
+                string activePiece = chessGame.GetActivePiece();
 
                 // Update previously clicked piece image
-                Position coordinates = chessBoard.GetLastActivePositions();
+                Position coordinates = chessGame.GetLastActivePositions();
                 int oldIndex = (boardSize * coordinates.X) + coordinates.Y;
                 chessBoardGraphics.Controls[oldIndex].BackgroundImage = null;
 
@@ -51,7 +51,7 @@ namespace ChessGame
                 //chessBoardGraphics.Controls[oldIndex].BackColor = OriginalColor;
 
                 // Update freshly moved piece image
-                var pieceType = $"{activePiece.Color}_{activePiece.PieceType.ToString()}";
+                var pieceType = $"{chessGame.GetActivePieceColor()}_{chessGame.GetActivePieceType()}";
                 chessBoardGraphics.Controls[freshIndex].BackgroundImage = SetPieceImage(pieceType);
                 chessBoardGraphics.Controls[freshIndex].BackgroundImageLayout = ImageLayout.Zoom;
 

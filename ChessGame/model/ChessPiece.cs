@@ -9,12 +9,13 @@ namespace ChessGame.model
 
         private bool wasMoved;
 
-        protected ChessPiece(ColorType color)
+        protected ChessPiece(ColorType color, int size)
         {
             Color = color;
             currentSquare = null;
             wasMoved = false;
-            BoardSize = 7;
+            //BoardSize = 7;
+            BoardSize = size;
         }
 
         protected IEnumerable<Position> AddSingleSquarePositions(Position position, bool requirement)

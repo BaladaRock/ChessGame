@@ -8,7 +8,7 @@ namespace ChessGame.model
 
         private readonly int boardSize;
 
-        public Pawn(ColorType color) : base(color)
+        public Pawn(ColorType color, int size) : base(color, size)
         {
             boardSize = BoardSize;
             Movement = MovementType.singleSquare;

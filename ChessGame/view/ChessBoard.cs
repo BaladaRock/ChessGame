@@ -1,4 +1,4 @@
-﻿using ChessGame.model;
+﻿using ChessGame.controller;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -22,9 +22,9 @@ namespace ChessGame
 
         private const int KingIndex = 4;
 
-        private readonly FormChessBoard chessBoard;
+        private readonly FormChessBoard squares;
 
-        private ChessGame.model.ChessBoard chessSquares;
+        private controller.ChessGame chessGame;
 
         private readonly int leftMargin;
 
@@ -38,11 +38,12 @@ namespace ChessGame
 
         public ChessBoard(FormChessBoard chessBoard, int leftMargin, int upperMargin, int borderThickness)
         {
-            this.chessBoard = chessBoard;
+            squares = chessBoard;
             this.leftMargin = leftMargin;
             this.upperMargin = upperMargin;
             gutterLength = leftMargin * KingIndex;
             rectangleLength = (BishopLeftIndex * gutterLength) + (KingIndex * borderThickness);
+            chessGame = new controller.ChessGame(Size);
             DrawOutline(borderThickness);
         }
 
@@ -91,13 +92,13 @@ namespace ChessGame
             }
 
             var imageColor = colorType == blackColor ? Properties.Resources.black_king : Properties.Resources.white_king;
-            AddPieceAndImage(rowIndex, columnIndex, new King(colorType == blackColor ? ColorType.black : ColorType.white), imageColor);
+            AddPieceAndImage(rowIndex, columnIndex, "king", colorType, imageColor);
         }
 
-        private void AddPieceAndImage(int rowIndex, int columnIndex, ChessPiece newKing, Bitmap imageColor)
+        private void AddPieceAndImage(int rowIndex, int columnIndex, string pieceToPlace, string color, Bitmap imageColor)
         {
             InsertImage(rowIndex, columnIndex, imageColor);
-            newKing.OccupySquare(chessSquares.GetSquare(rowIndex, columnIndex));
+            chessGame.OccupySquare(pieceToPlace, color, rowIndex, columnIndex);
         }
 
         private void AddQueen(int rowIndex, int columnIndex, string colorType = blackColor)
@@ -108,7 +109,7 @@ namespace ChessGame
             }
 
             var imageColor = colorType == blackColor ? Properties.Resources.black_queen : Properties.Resources.white_queen;
-            AddPieceAndImage(rowIndex, columnIndex, new Queen(colorType == blackColor ? ColorType.black : ColorType.white), imageColor);
+            AddPieceAndImage(rowIndex, columnIndex, "queen", colorType, imageColor);
         }
 
         private void AddBishops(int rowIndex, int columnIndex, string colorType = blackColor)
@@ -119,7 +120,7 @@ namespace ChessGame
             }
 
             var imageColor = colorType == blackColor ? Properties.Resources.black_bishop : Properties.Resources.white_bishop;
-            AddPieceAndImage(rowIndex, columnIndex, new Bishop(colorType == blackColor ? ColorType.black : ColorType.white), imageColor);
+            AddPieceAndImage(rowIndex, columnIndex, "bishop", colorType, imageColor);
         }
 
         private void AddKnights(int rowIndex, int columnIndex, string colorType = blackColor)
@@ -130,7 +131,7 @@ namespace ChessGame
             }
 
             var imageColor = colorType == blackColor ? Properties.Resources.black_knight : Properties.Resources.white_knight;
-            AddPieceAndImage(rowIndex, columnIndex, new Knight(colorType == blackColor ? ColorType.black : ColorType.white), imageColor);
+            AddPieceAndImage(rowIndex, columnIndex, "knight", colorType, imageColor);
         }
 
         private void AddRooks(int rowIndex, int columnIndex, string colorType = blackColor)
@@ -141,7 +142,7 @@ namespace ChessGame
             }
 
             var imageColor = colorType == blackColor ? Properties.Resources.black_rook : Properties.Resources.white_rook;
-            AddPieceAndImage(rowIndex, columnIndex, new Rook(colorType == blackColor ? ColorType.black : ColorType.white), imageColor);
+            AddPieceAndImage(rowIndex, columnIndex, "rook", colorType, imageColor);
         }
 
         private void AddBlackBackPieces(int rowIndex, int columnIndex)
@@ -166,20 +167,20 @@ namespace ChessGame
         private void AddPawns(int rowIndex, int columnIndex, string colorType = blackColor)
         {
             var imageColor = colorType == blackColor ? Properties.Resources.black_pawn : Properties.Resources.white_pawn;
-            AddPieceAndImage(rowIndex, columnIndex, new Pawn(colorType == blackColor ? ColorType.black : ColorType.white), imageColor);
+            AddPieceAndImage(rowIndex, columnIndex, "pawn", colorType, imageColor);
         }
 
         private void InsertImage(int rowIndex, int columnIndex, Bitmap pieceImage)
         {
             int controlIndex = (rowIndex * Size) + columnIndex;
-            var chessSquare = chessBoard.Controls[controlIndex];
+            var chessSquare = squares.Controls[controlIndex];
             chessSquare.BackgroundImage = pieceImage;
             chessSquare.BackgroundImageLayout = ImageLayout.Zoom;
         }
 
         private void DrawOutline(int borderThickness)
         {
-            Graphics board = chessBoard.CreateGraphics();
+            Graphics board = squares.CreateGraphics();
             Brush brown = new SolidBrush(Color.Brown);
             Pen borderPen = new Pen(brown, borderThickness);
 
@@ -194,7 +195,7 @@ namespace ChessGame
         internal void BuildChessBoard(int size, Color firstSquareColor, Color secondSquareColor)
         {
             Size = size;
-            chessSquares = new model.ChessBoard(Size);
+            chessGame.BuildChessGame(Size);
 
             for (int i = 0; i < Size; i++)
             {
@@ -204,16 +205,16 @@ namespace ChessGame
                     {
                         Location = new Point(i + gutterLength + (leftMargin * i), j + upperMargin + (j * leftMargin)),
                         Size = new Size(leftMargin, leftMargin),
-                        BackColor = j % BishopLeftIndex == 0 ? firstSquareColor : secondSquareColor
+                        BackColor = j % 2 == 0 ? firstSquareColor : secondSquareColor
                     };
 
-                    var customSquare = new CustomChessSquare(chessSquares, chessSquare, chessBoard, Size)
+                    var customSquare = new CustomChessSquare(chessGame, chessSquare, squares, Size)
                     {
                         X = i,
                         Y = j
                     };
 
-                    chessBoard.Add(customSquare);
+                    squares.Add(customSquare);
                 }
                 SwapColors(ref firstSquareColor, ref secondSquareColor);
             }

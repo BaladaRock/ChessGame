@@ -233,7 +233,7 @@ namespace ChessGame.model
                 return true;
             }
 
-            var newQueen = new Queen(active.Color);
+            var newQueen = new Queen(active.Color, boardSize);
             newQueen.OccupySquare(ActiveSquare);
             Console.WriteLine(newQueen.Movement);
             return true;

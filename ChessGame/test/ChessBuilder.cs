@@ -15,7 +15,7 @@ namespace ChessGame.test
             //// Create new empty board and add pawns
             var chessBoard = new model.ChessBoard(8);
 
-            var whitePawn = new Pawn(ColorType.white);
+            var whitePawn = new Pawn(ColorType.white, 7);
             var square = chessBoard.GetSquare(6, 6);
             whitePawn.OccupySquare(square);
 
@@ -43,7 +43,7 @@ namespace ChessGame.test
             //}
 
             //// Test knight movement
-            var blackKnight = new Knight(ColorType.black);
+            var blackKnight = new Knight(ColorType.black, 7);
             var knightSquare = chessBoard.GetSquare(4, 6);
             blackKnight.OccupySquare(knightSquare);
 
@@ -68,7 +68,7 @@ namespace ChessGame.test
             }
 
             //// Test bishop movement
-            var whiteBishop = new Bishop(ColorType.white);
+            var whiteBishop = new Bishop(ColorType.white, 7);
             var bishopSquare = chessBoard.GetSquare(5, 1);
             whiteBishop.OccupySquare(bishopSquare);
 
@@ -84,7 +84,7 @@ namespace ChessGame.test
             }
 
             //// Test queen movement
-            var whiteQueen = new Queen(ColorType.white);
+            var whiteQueen = new Queen(ColorType.white, 7);
             var queenSquare = chessBoard.GetSquare(4, 4);
             whiteQueen.OccupySquare(queenSquare);
 
