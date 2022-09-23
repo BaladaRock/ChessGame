@@ -57,6 +57,7 @@ namespace ChessGame.controller
             //    board.CheckPromotion();
             //    board.CheckIsInCheck();
             //}
+
             return board.UpdatedAfterClick(x, y);
         }
 
