@@ -1,9 +1,7 @@
 
 ChessGame/bin/Debug/
 
-.vs/ChessGame/FileContentIndex/
-
-.vs/ChessGame/v17/
+vs/
 
 ChessGame/obj/Debug/
 
@@ -12,4 +10,3 @@ ChessTests/bin/
 ChessTests/obj/
 
 *.v2
-*.vs
