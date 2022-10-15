@@ -1,99 +1,91 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using static System.Linq.Enumerable;
+
 
 namespace ChessGame.model
 {
     public static class PositionsCalculator
     {
-        internal static IEnumerable<Position> GetLowerLeftDiagonal(int boardSize, int currentX, int currentY)
-        {
-            var positions = new List<Position>(boardSize);
-            for (var (x, y) = (currentX - 1, currentY + 1); (x >= 0 && y <= boardSize); x--, y++)
-            {
-                positions.Add(new Position(x, y));
-            }
+        public static int BoardSize { get; set; }
 
-            return positions;
+        public static IEnumerable<Position> GetLowerLeftDiagonal(int currentX, int currentY)
+        {
+            return CheckSizes(currentX, currentY)
+               ? GetDiagonal(currentY, Range(0, currentX).Reverse())
+               : Empty<Position>();
+        }
+        public static IEnumerable<Position> GetLowerRightDiagonal(int currentX, int currentY)
+        {
+            return CheckSizes(currentX, currentY)
+               ? GetDiagonal(currentY, Range(currentX + 1, BoardSize - currentX - 1))
+               : Empty<Position>();
         }
 
-        public static IEnumerable<Position> GetUpperLeftDiagonal(int boardSize, int currentX, int currentY)
+        public static IEnumerable<Position> GetUpperLeftDiagonal(int currentX, int currentY)
         {
-            var positions = new List<Position>(boardSize);
-            for (var (x, y) = (currentX - 1, currentY - 1); (x >= 0 && y >= 0); x--, y--)
-            {
-                positions.Add(new Position(x, y));
-            }
-
-            return positions;
+            return CheckSizes(currentX, currentY)
+              ? GetDiagonal(currentY, Range(0, currentX).Reverse(), -1)
+              : Empty<Position>();
         }
 
-        public static IEnumerable<Position> GetLowerRightDiagonal(int boardSize, int currentX, int currentY)
+        public static IEnumerable<Position> GetUpperRightDiagonal(int currentX, int currentY)
         {
-            var positions = new List<Position>(boardSize);
-            for (var (x, y) = (currentX + 1, currentY + 1); (x <= boardSize && y <= boardSize); x++, y++)
-            {
-                positions.Add(new Position(x, y));
-            }
-
-            return positions;
+            return CheckSizes(currentX, currentY)
+               ? GetDiagonal(currentY, Range(currentX + 1, BoardSize - currentX - 1), -1)
+               : Empty<Position>();
         }
 
-        public static IEnumerable<Position> GetUpperRightDiagonal(int boardSize, int currentX, int currentY)
+        public static IEnumerable<Position> GetLeftLine(int currentX, int currentY)
         {
-            var positions = new List<Position>(boardSize);
-            for (var (x, y) = (currentX + 1, currentY - 1); (x <= boardSize && y >= 0); x++, y--)
-            {
-                positions.Add(new Position(x, y));
-            }
-
-            return positions;
+            return CheckSizes(currentX, currentY)
+                ? GetLine(currentY, Range(0, currentX).Reverse())
+                : Empty<Position>();
         }
 
-        public static IEnumerable<Position> GetLeftLine(int boardSize, int currentX, int currentY)
+        public static IEnumerable<Position> GetRightLine(int currentX, int currentY)
         {
-            var positions = new List<Position>(boardSize);
-            for (int i = currentX - 1; i >= 0; i--)
-            {
-                positions.Add(new Position(i, currentY));
-            }
-
-            return positions;
+            return CheckSizes(currentX, currentY)
+                ? GetLine(currentY, Range(currentX + 1, BoardSize - currentX - 1))
+                : Empty<Position>();
         }
 
-        public static IEnumerable<Position> GetRightLine(int boardSize, int currentX, int currentY)
+        public static IEnumerable<Position> GetUpperColumn(int currentX, int currentY)
         {
-            var positions = new List<Position>(boardSize);
-
-            for (int i = currentX + 1; i <= boardSize; i++)
-            {
-                positions.Add(new Position(i, currentY));
-            }
-
-            return positions;
+            return CheckSizes(currentX, currentY)
+                ? GetColumn(currentX, Range(0, currentY).Reverse())
+                : Empty<Position>();
         }
 
-        public static IEnumerable<Position> GetUpperColumn(int boardSize, int currentX, int currentY)
+        public static IEnumerable<Position> GetLowerColumn(int currentX, int currentY)
         {
-            var positions = new List<Position>(boardSize);
-
-            for (int i = currentY - 1; i >= 0; i--)
-            {
-                positions.Add(new Position(currentX, i));
-            }
-
-            return positions;
+            return CheckSizes(currentX, currentY)
+                ? GetColumn(currentX, Range(currentY + 1, BoardSize - currentY - 1))
+                : Empty<Position>();
         }
 
-        public static IEnumerable<Position> GetLowerColumn(int boardSize, int currentX, int currentY)
+        private static IEnumerable<Position> GetColumn(int incrementX, IEnumerable<int> positionsRange)
         {
-            var positions = new List<Position>(boardSize);
+            return positionsRange.Select(element => new Position(incrementX, element));
+        }
 
-            for (int i = currentY + 1; i < boardSize; i++)
-            {
-                positions.Add(new Position(currentX, i));
-            }
+        private static IEnumerable<Position> GetLine(int incrementY, IEnumerable<int> positionsRange)
+        {
+            return positionsRange.Select(element => new Position(element, incrementY));
+        }
 
-            return positions;
+        private static IEnumerable<Position> GetDiagonal(int incrementY, IEnumerable<int> positionsRange, short reverse = 1)
+        {
+            return positionsRange.Select((element, index) => new Position(element, incrementY + (index * reverse) + reverse))
+                        .TakeWhile(position => CheckSizes(position.X, position.Y));
+        }
+
+        private static bool CheckSizes(int xPosition, int yPosition)
+        {
+            return (xPosition >= 0 && xPosition < BoardSize)
+                && (yPosition >= 0 && yPosition < BoardSize);
         }
     }
 }

@@ -150,14 +150,14 @@ namespace ChessGame.model
 
             var allDirections = new[]
             {
-                PositionsCalculator.GetUpperLeftDiagonal(boardSize -1, activePosition.X, activePosition.Y),
-                PositionsCalculator.GetLowerLeftDiagonal(boardSize -1, activePosition.X, activePosition.Y),
-                PositionsCalculator.GetUpperRightDiagonal(boardSize -1, activePosition.X, activePosition.Y),
-                PositionsCalculator.GetLowerRightDiagonal(boardSize -1, activePosition.X, activePosition.Y),
-                PositionsCalculator.GetLeftLine(boardSize -1, activePosition.X, activePosition.Y),
-                PositionsCalculator.GetUpperColumn(boardSize -1, activePosition.X, activePosition.Y),
-                PositionsCalculator.GetRightLine(boardSize -1, activePosition.X, activePosition.Y),
-                PositionsCalculator.GetLowerColumn(boardSize -1, activePosition.X, activePosition.Y),
+                PositionsCalculator.GetUpperLeftDiagonal(activePosition.X, activePosition.Y),
+                PositionsCalculator.GetLowerLeftDiagonal(activePosition.X, activePosition.Y),
+                PositionsCalculator.GetUpperRightDiagonal(activePosition.X, activePosition.Y),
+                PositionsCalculator.GetLowerRightDiagonal(activePosition.X, activePosition.Y),
+                PositionsCalculator.GetLeftLine(activePosition.X, activePosition.Y),
+                PositionsCalculator.GetUpperColumn(activePosition.X, activePosition.Y),
+                PositionsCalculator.GetRightLine(activePosition.X, activePosition.Y),
+                PositionsCalculator.GetLowerColumn(activePosition.X, activePosition.Y),
             }
             .Union(knightSquare.Piece.GetAvailablePositions());
 
@@ -168,22 +168,22 @@ namespace ChessGame.model
         {
             foreach (var position in enemyCheckersPositions)
             {
-                var currentPiece = boardSquares[position.X, position.Y].Piece;
+                //var currentPiece = boardSquares[position.X, position.Y].Piece;
 
-                if (currentPiece == null)
-                {
-                    continue;
-                }
+                //if (currentPiece == null)
+                //{
+                //    continue;
+                //}
 
-                if (currentPiece.Color == ownColor)
-                {
-                    break;
-                }
+                //if (currentPiece.Color == ownColor)
+                //{
+                //    break;
+                //}
 
-                if (CheckedByActivePiece((ChessPiece)currentPiece, kingPosition))
-                {
-                    return true;
-                }
+                //if (CheckedByActivePiece((ChessPiece)currentPiece, kingPosition))
+                //{
+                //    return true;
+                //}
             }
 
             return false;
@@ -199,28 +199,28 @@ namespace ChessGame.model
             switch (kingX)
             {
                 case int _ when kingY == movedY && kingX > movedX:
-                    return PositionsCalculator.GetLeftLine(boardSize - 1, movedX, movedY);
+                    return PositionsCalculator.GetLeftLine(movedX, movedY);
 
                 case int _ when kingY == movedY && kingX < movedX:
-                    return PositionsCalculator.GetRightLine(boardSize - 1, movedX, movedY);
+                    return PositionsCalculator.GetRightLine(movedX, movedY);
 
                 case int _ when kingX == movedX && kingY > movedY:
-                    return PositionsCalculator.GetUpperColumn(boardSize - 1, movedX, movedY);
+                    return PositionsCalculator.GetUpperColumn(movedX, movedY);
 
                 case int _ when kingX == movedX && kingY < movedY:
-                    return PositionsCalculator.GetLowerColumn(boardSize - 1, movedX, movedY);
+                    return PositionsCalculator.GetLowerColumn(movedX, movedY);
 
                 case int _ when kingX > movedX && kingY < movedY:
-                    return PositionsCalculator.GetLowerLeftDiagonal(boardSize - 1, movedX, movedY);
+                    return PositionsCalculator.GetLowerLeftDiagonal(movedX, movedY);
 
                 case int _ when kingX > movedX && kingY > movedY:
-                    return PositionsCalculator.GetUpperLeftDiagonal(boardSize - 1, movedX, movedY);
+                    return PositionsCalculator.GetUpperLeftDiagonal(movedX, movedY);
 
                 case int _ when kingX < movedX && kingY < movedY:
-                    return PositionsCalculator.GetLowerRightDiagonal(boardSize - 1, movedX, movedY);
+                    return PositionsCalculator.GetLowerRightDiagonal(movedX, movedY);
 
                 case int _ when kingX < movedX && kingY > movedY:
-                    return PositionsCalculator.GetUpperRightDiagonal(boardSize - 1, movedX, movedY);
+                    return PositionsCalculator.GetUpperRightDiagonal(movedX, movedY);
 
                 default:
                     return Enumerable.Empty<Position>();
