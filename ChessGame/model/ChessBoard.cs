@@ -32,6 +32,7 @@ namespace ChessGame.model
             BuildChessBoard();
             WhiteKingPosition = new Position(4, 7);
             BlackKingPosition = new Position(4, 0);
+            PositionsCalculator.BoardSize = size;
             calculator = new ChessCalculator(boardSize, boardSquares);
         }
 

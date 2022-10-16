@@ -14,7 +14,6 @@ namespace ChessGame.model
             Color = color;
             currentSquare = null;
             wasMoved = false;
-            //BoardSize = 7;
             BoardSize = size;
         }
 
@@ -52,42 +51,43 @@ namespace ChessGame.model
 
         public virtual IEnumerable<Position> GetLowerLeftDiagonal()
         {
-            return PositionsCalculator.GetLowerLeftDiagonal(BoardSize, CurrentX, CurrentY);
+
+            return PositionsCalculator.GetLowerLeftDiagonal(CurrentX, CurrentY);
         }
 
         public virtual IEnumerable<Position> GetUpperLeftDiagonal()
         {
-            return PositionsCalculator.GetUpperLeftDiagonal(BoardSize, CurrentX, CurrentY);
+            return PositionsCalculator.GetUpperLeftDiagonal(CurrentX, CurrentY);
         }
 
         public virtual IEnumerable<Position> GetLowerRightDiagonal()
         {
-            return PositionsCalculator.GetLowerRightDiagonal(BoardSize, CurrentX, CurrentY);
+            return PositionsCalculator.GetLowerRightDiagonal(CurrentX, CurrentY);
         }
 
         public virtual IEnumerable<Position> GetUpperRightDiagonal()
         {
-            return PositionsCalculator.GetUpperRightDiagonal(BoardSize, CurrentX, CurrentY);
+            return PositionsCalculator.GetUpperRightDiagonal(CurrentX, CurrentY);
         }
 
         public virtual IEnumerable<Position> GetLeftLine()
         {
-            return PositionsCalculator.GetLeftLine(BoardSize, CurrentX, CurrentY);
+            return PositionsCalculator.GetLeftLine(CurrentX, CurrentY);
         }
 
         public virtual IEnumerable<Position> GetRightLine()
         {
-            return PositionsCalculator.GetRightLine(BoardSize, CurrentX, CurrentY);
+            return PositionsCalculator.GetRightLine(CurrentX, CurrentY);
         }
 
         public virtual IEnumerable<Position> GetUpperColumn()
         {
-            return PositionsCalculator.GetUpperColumn(BoardSize, CurrentX, CurrentY);
+            return PositionsCalculator.GetUpperColumn(CurrentX, CurrentY);
         }
 
         public virtual IEnumerable<Position> GetLowerColumn()
         {
-            return PositionsCalculator.GetLowerColumn(BoardSize, CurrentX, CurrentY);
+            return PositionsCalculator.GetLowerColumn(CurrentX, CurrentY);
         }
 
         public virtual void OccupySquare(ChessSquare chessSquare)
