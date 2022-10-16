@@ -1,5 +1,6 @@
 ﻿using ChessGame.model;
 using System;
+using System.Diagnostics;
 using System.Linq;
 
 namespace ChessGame.test
@@ -12,93 +13,40 @@ namespace ChessGame.test
 
         public void TestObjects()
         {
-            //// Create new empty board and add pawns
-            var chessBoard = new model.ChessBoard(8);
+            // Test which version of PositionsCalculator is more time efficient
+            PositionsCalculator.BoardSize = 8;
+            var testOld = new Stopwatch();
 
-            var whitePawn = new Pawn(ColorType.white, 7);
-            var square = chessBoard.GetSquare(6, 6);
-            whitePawn.OccupySquare(square);
-
-            // Test pawn movement
-            //whitePawn.MovePiece(chessBoard.GetSquare(6, 5));
-            //var pawnPositions = whitePawn.GetAvailablePositions();
-
-            //for (int i = 0; i < pawnPositions.ToList().Count; i++)
-            //{
-            //    foreach (var position in pawnPositions.ToList()[i])
-            //    {
-            //        Console.WriteLine($"Pawn available moves: {position.X}, {position.Y}");
-            //    }
-            //}
-
-            //whitePawn.MovePiece(chessBoard.GetSquare(6, 5));
-            //var capturePositions = whitePawn.GetCapturePositions();
-
-            //for (int i = 0; i < capturePositions.ToList().Count; i++)
-            //{
-            //    foreach (var position in capturePositions.ToList()[i])
-            //    {
-            //        Console.WriteLine($"Pawn available capture moves: {position.X}, {position.Y}");
-            //    }
-            //}
-
-            //// Test knight movement
-            var blackKnight = new Knight(ColorType.black, 7);
-            var knightSquare = chessBoard.GetSquare(4, 6);
-            blackKnight.OccupySquare(knightSquare);
-
-            var knightMoves = blackKnight.GetAvailablePositions().ToList();
-            Console.WriteLine($"Count test: {knightMoves?.Count}");
-            for (int i = 0; i < knightMoves.ToList().Count; i++)
+            for (int x = 0; x < 50; x++)
             {
-                foreach (var position in knightMoves.ToList()[i])
+                testOld.Start();
+                for (int i = 0; i < 5000000; i++)
                 {
-                    Console.WriteLine($"Knight available moves: {position.X}, {position.Y}");
+                    var randomGenerator = new Random();
+                    byte xCoord = (byte)randomGenerator.Next(0, 7);
+                    byte yCoord = (byte)randomGenerator.Next(0, 7);
+
+                    PositionsCalculator.GetLeftLine(xCoord, yCoord);
+                    PositionsCalculator.GetRightLine(xCoord, yCoord);
+                    PositionsCalculator.GetUpperColumn(xCoord, yCoord);
+                    PositionsCalculator.GetLowerColumn(xCoord, yCoord);
+                    PositionsCalculator.GetLowerLeftDiagonal(xCoord, yCoord);
+                    PositionsCalculator.GetLowerRightDiagonal(xCoord, yCoord);
+                    PositionsCalculator.GetUpperLeftDiagonal(xCoord, yCoord);
+                    PositionsCalculator.GetUpperRightDiagonal(xCoord, yCoord);
                 }
+
+
+                testOld.Stop();
+
+                Console.WriteLine("Execution time: {0}", testOld.Elapsed);
+                testOld.Reset();
             }
 
-            var knightCaptures = blackKnight.GetCapturePositions().ToList();
-            Console.WriteLine($"Count test: {knightCaptures?.Count}");
-            for (int i = 0; i < knightCaptures.ToList().Count; i++)
-            {
-                foreach (var position in knightCaptures.ToList()[i])
-                {
-                    Console.WriteLine($"Knight available capture moves: {position.X}, {position.Y}");
-                }
-            }
+            // Results per 1 million values
+            // Execution time: < 1.5 sec for linq implementation
+            // Execution time: ~ 2 secs for iterative implementation
 
-            //// Test bishop movement
-            var whiteBishop = new Bishop(ColorType.white, 7);
-            var bishopSquare = chessBoard.GetSquare(5, 1);
-            whiteBishop.OccupySquare(bishopSquare);
-
-            var bishopCaptures = whiteBishop.GetCapturePositions().ToList();
-            Console.WriteLine($"Count test: {bishopCaptures?.Count}");
-
-            for (int i = 0; i < bishopCaptures?.Count; i++)
-            {
-                foreach (var position in bishopCaptures.ToList()[i])
-                {
-                    Console.WriteLine($"Bishop available capture moves: {position.X}, {position.Y}");
-                }
-            }
-
-            //// Test queen movement
-            var whiteQueen = new Queen(ColorType.white, 7);
-            var queenSquare = chessBoard.GetSquare(4, 4);
-            whiteQueen.OccupySquare(queenSquare);
-
-            // Lower left diagonal
-            var queenCaptures = whiteQueen.GetAvailablePositions().ToList();
-            Console.WriteLine($"Count test: {queenCaptures?.Count}");
-
-            for (int i = 0; i < queenCaptures?.Count; i++)
-            {
-                foreach (var position in queenCaptures.ToList()[i])
-                {
-                    Console.WriteLine($"Queen available capture moves: {position.X}, {position.Y}");
-                }
-            }
         }
     }
 }
