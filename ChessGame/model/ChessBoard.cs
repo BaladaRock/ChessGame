@@ -16,19 +16,19 @@ namespace ChessGame.model
 
         private ChessCalculator calculator;
 
-        protected int boardSize;
+        protected byte boardSize;
 
         private bool piecePreviouslyClicked;
 
         private ColorType playerToMove;
 
-        public ChessBoard(int size)
+        public ChessBoard(byte size)
         {
             boardSize = size;
             boardSquares = new ChessSquare[boardSize, boardSize];
             playerToMove = ColorType.white;
             piecePreviouslyClicked = false;
-            notFound = new Position(-1, -1);
+            notFound = new Position(boardSize, boardSize);
             BuildChessBoard();
             WhiteKingPosition = new Position(4, 7);
             BlackKingPosition = new Position(4, 0);
@@ -49,7 +49,7 @@ namespace ChessGame.model
             return ActiveSquare.Piece;
         }
 
-        public bool UpdatedAfterClick(int x, int y)
+        public bool UpdatedAfterClick(byte x, byte y)
         {
             ChessSquare freshlyClicked = boardSquares[x, y];
 
@@ -97,9 +97,9 @@ namespace ChessGame.model
 
         private void BuildSquares(ChessSquare[,] boardSquares, ColorType white, ColorType black)
         {
-            for (int i = 0; i < boardSize; i++)
+            for (byte i = 0; i < boardSize; i++)
             {
-                for (int j = 0; j < boardSize; j++)
+                for (byte j = 0; j < boardSize; j++)
                 {
                     ColorType squareColor = j % 2 == 0 ? white : black;
                     boardSquares[i, j] = new ChessSquare(new Position(i, j), squareColor);

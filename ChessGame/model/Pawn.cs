@@ -4,11 +4,11 @@ namespace ChessGame.model
 {
     public class Pawn : ChessPiece
     {
-        private const int DoubleMove = 2;
+        private const byte DoubleMove = 2;
 
-        private readonly int boardSize;
+        private readonly byte boardSize;
 
-        public Pawn(ColorType color, int size) : base(color, size)
+        public Pawn(ColorType color, byte size) : base(color, size)
         {
             boardSize = BoardSize;
             Movement = MovementType.singleSquare;
@@ -51,7 +51,7 @@ namespace ChessGame.model
         public override IEnumerable<Position> GetUpperColumn()
         {
             return AddSingleSquarePositions(
-              new Position(CurrentX, CurrentY - 1),
+              new Position(CurrentX, (byte)(CurrentY - 1)),
               CurrentY > 0 && CurrentY < boardSize
             );
         }
@@ -59,7 +59,7 @@ namespace ChessGame.model
         public override IEnumerable<Position> GetLowerColumn()
         {
             return AddSingleSquarePositions(
-              new Position(CurrentX, CurrentY + 1),
+              new Position(CurrentX, (byte)(CurrentY + 1)),
               CurrentY > 0 && CurrentY < boardSize
             );
         }
@@ -67,7 +67,7 @@ namespace ChessGame.model
         public override IEnumerable<Position> GetUpperLeftDiagonal()
         {
             return AddSingleSquarePositions(
-              new Position(CurrentX - 1, CurrentY - 1),
+              new Position((byte)(CurrentX - 1), (byte)(CurrentY - 1)),
               CurrentY > 0 && CurrentX > 0
             );
         }
@@ -75,7 +75,7 @@ namespace ChessGame.model
         public override IEnumerable<Position> GetLowerLeftDiagonal()
         {
             return AddSingleSquarePositions(
-              new Position(CurrentX - 1, CurrentY + 1),
+              new Position((byte)(CurrentX - 1), (byte)(CurrentY + 1)),
               CurrentY > 0 && CurrentX > 0
             );
         }
@@ -83,7 +83,7 @@ namespace ChessGame.model
         public override IEnumerable<Position> GetUpperRightDiagonal()
         {
             return AddSingleSquarePositions(
-              new Position(CurrentX + 1, CurrentY - 1),
+              new Position((byte)(CurrentX + 1), (byte)(CurrentY - 1)),
               CurrentY < boardSize && CurrentX < boardSize
             );
         }
@@ -91,14 +91,14 @@ namespace ChessGame.model
         public override IEnumerable<Position> GetLowerRightDiagonal()
         {
             return AddSingleSquarePositions(
-              new Position(CurrentX + 1, CurrentY + 1),
+              new Position((byte)(CurrentX + 1), (byte)(CurrentY + 1)),
               CurrentY < boardSize && CurrentX < boardSize
             );
         }
 
         private IEnumerable<Position> GetDoubleMove(ColorType color)
         {
-            int toMove = color == ColorType.white ? CurrentY - DoubleMove : CurrentY + DoubleMove;
+            byte toMove = (byte)(color == ColorType.white ? CurrentY - DoubleMove : CurrentY + DoubleMove);
 
             return AddSingleSquarePositions(
               new Position(CurrentX, toMove),

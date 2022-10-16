@@ -4,7 +4,7 @@ namespace ChessGame.model
 {
     public class Bishop : ChessPiece
     {
-        public Bishop(ColorType color, int size) : base(color, size)
+        public Bishop(ColorType color, byte size) : base(color, size)
         {
             Movement = MovementType.multipleSquares;
         }

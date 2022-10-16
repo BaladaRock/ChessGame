@@ -11,9 +11,9 @@ namespace ChessGame.controller
     {
         private model.ChessBoard board;
 
-        public int BoardSize { get; private set; }
+        public byte BoardSize { get; private set; }
 
-        public ChessGame(int gameSize)
+        public ChessGame(byte gameSize)
         {
             BoardSize = gameSize;
             board = new model.ChessBoard(BoardSize);
@@ -47,7 +47,7 @@ namespace ChessGame.controller
             }
         }
 
-        internal bool UpdatedAfterClick(int x, int y)
+        internal bool UpdatedAfterClick(byte x, byte y)
         {
             //var pieceHasMoved = board.UpdatedAfterClick(x, y);
 
@@ -61,7 +61,7 @@ namespace ChessGame.controller
             return board.UpdatedAfterClick(x, y);
         }
 
-        internal void BuildChessGame(int size)
+        internal void BuildChessGame(byte size)
         {
             BoardSize = size;
             board = new model.ChessBoard(BoardSize);
