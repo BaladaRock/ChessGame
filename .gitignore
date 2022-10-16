@@ -1,9 +1,9 @@
 
-ChessGame/bin/Debug/
-
 vs/
 
-ChessGame/obj/Debug/
+ChessGame/obj/
+
+ChessGame/bin/
 
 ChessTests/bin/
 

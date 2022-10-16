@@ -8,9 +8,9 @@ namespace ChessTests.model
         public void Test_Positions_Lower_Column_Small_Size()
         {
             // Assert
-            int boardSize = 4;
-            int x = 2;
-            int y = 2;
+            byte boardSize = 4;
+            byte x = 2;
+            byte y = 2;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -28,9 +28,9 @@ namespace ChessTests.model
         public void Test_Positions_Lower_Column_Bigger_Size()
         {
             // Assert
-            int boardSize = 14;
-            int x = 2;
-            int y = 2;
+            byte boardSize = 14;
+            byte x = 2;
+            byte y = 2;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -58,9 +58,9 @@ namespace ChessTests.model
         public void Test_Positions_Lower_Column_Element_Exceeds_Max_Size()
         {
             // Assert
-            int boardSize = 5;
-            int x = 5;
-            int y = 5;
+            byte boardSize = 5;
+            byte x = 5;
+            byte y = 5;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -74,25 +74,9 @@ namespace ChessTests.model
         public void Test_Positions_Lower_Column_Should_Return_Empty_No_Position_Available()
         {
             // Assert
-            int boardSize = 5;
-            int x = 3;
-            int y = 4;
-
-            // Arrange
-            PositionsCalculator.BoardSize = boardSize;
-            var positions = PositionsCalculator.GetLowerColumn(x, y);
-
-            // Act
-            Assert.Empty(positions);
-        }
-
-        [Fact]
-        public void Test_Positions_Lower_Column_Should_Return_Empty_For_Negative_Values()
-        {
-            // Assert
-            int boardSize = 5;
-            int x = -2;
-            int y = -3;
+            byte boardSize = 5;
+            byte x = 3;
+            byte y = 4;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -106,9 +90,9 @@ namespace ChessTests.model
         public void Test_Positions_Lower_Column_Should_Return_Single_Possition_Edge_Case()
         {
             // Assert
-            int boardSize = 5;
-            int x = 2;
-            int y = 3;
+            byte boardSize = 5;
+            byte x = 2;
+            byte y = 3;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -126,9 +110,9 @@ namespace ChessTests.model
         public void Test_Positions_Upper_Column_Small_Size()
         {
             // Assert
-            int boardSize = 8;
-            int x = 7;
-            int y = 7;
+            byte boardSize = 8;
+            byte x = 7;
+            byte y = 7;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -152,9 +136,9 @@ namespace ChessTests.model
         public void Test_Positions_Upper_Column_Bigger_Size()
         {
             // Assert
-            int boardSize = 14;
-            int x = 12;
-            int y = 12;
+            byte boardSize = 14;
+            byte x = 12;
+            byte y = 12;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -183,9 +167,9 @@ namespace ChessTests.model
         public void Test_Positions_Upper_Column_Element_Exceeds_Max_Size()
         {
             // Assert
-            int boardSize = 5;
-            int x = 0;
-            int y = 5;
+            byte boardSize = 5;
+            byte x = 0;
+            byte y = 5;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -199,25 +183,9 @@ namespace ChessTests.model
         public void Test_Positions_Upper_Column_Should_Return_Empty_No_Position_Available()
         {
             // Assert
-            int boardSize = 5;
-            int x = 2;
-            int y = 0;
-
-            // Arrange
-            PositionsCalculator.BoardSize = boardSize;
-            var positions = PositionsCalculator.GetUpperColumn(x, y);
-
-            // Act
-            Assert.Empty(positions);
-        }
-
-        [Fact]
-        public void Test_Positions_Upper_Column_Should_Return_Empty_For_Negative_Values()
-        {
-            // Assert
-            int boardSize = 5;
-            int x = -2;
-            int y = -3;
+            byte boardSize = 5;
+            byte x = 2;
+            byte y = 0;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -231,9 +199,9 @@ namespace ChessTests.model
         public void Test_Positions_Upper_Column_Should_Return_Single_Possition_Edge_Case()
         {
             // Assert
-            int boardSize = 5;
-            int x = 2;
-            int y = 1;
+            byte boardSize = 5;
+            byte x = 2;
+            byte y = 1;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -251,9 +219,9 @@ namespace ChessTests.model
         public void Test_Positions_Left_Line_Small_Size()
         {
             // Assert
-            int boardSize = 4;
-            int x = 3;
-            int y = 2;
+            byte boardSize = 4;
+            byte x = 3;
+            byte y = 2;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -273,9 +241,9 @@ namespace ChessTests.model
         public void Test_Positions_Left_Line_Bigger_Size()
         {
             // Assert
-            int boardSize = 14;
-            int x = 12;
-            int y = 13;
+            byte boardSize = 14;
+            byte x = 12;
+            byte y = 13;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -304,9 +272,9 @@ namespace ChessTests.model
         public void Test_Positions_Left_Line_Element_Exceeds_Max_Size()
         {
             // Assert
-            int boardSize = 5;
-            int x = 5;
-            int y = 5;
+            byte boardSize = 5;
+            byte x = 5;
+            byte y = 5;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -320,25 +288,9 @@ namespace ChessTests.model
         public void Test_Positions_Left_Line_Should_Return_Empty_No_Position_Available()
         {
             // Assert
-            int boardSize = 5;
-            int x = 0;
-            int y = 2;
-
-            // Arrange
-            PositionsCalculator.BoardSize = boardSize;
-            var positions = PositionsCalculator.GetLeftLine(x, y);
-
-            // Act
-            Assert.Empty(positions);
-        }
-
-        [Fact]
-        public void Test_Positions_Left_Line_Should_Return_Empty_For_Negative_Values()
-        {
-            // Assert
-            int boardSize = 5;
-            int x = -2;
-            int y = -3;
+            byte boardSize = 5;
+            byte x = 0;
+            byte y = 2;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -352,9 +304,9 @@ namespace ChessTests.model
         public void Test_Positions_Left_Line_Should_Return_Single_Possition_Edge_Case()
         {
             // Assert
-            int boardSize = 3;
-            int x = 1;
-            int y = 2;
+            byte boardSize = 3;
+            byte x = 1;
+            byte y = 2;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -372,9 +324,9 @@ namespace ChessTests.model
         public void Test_Positions_Right_Line_Small_Size()
         {
             // Assert
-            int boardSize = 4;
-            int x = 1;
-            int y = 2;
+            byte boardSize = 4;
+            byte x = 1;
+            byte y = 2;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -393,9 +345,9 @@ namespace ChessTests.model
         public void Test_Positions_Right_Line_Bigger_Size()
         {
             // Assert
-            int boardSize = 14;
-            int x = 1;
-            int y = 12;
+            byte boardSize = 14;
+            byte x = 1;
+            byte y = 12;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -424,9 +376,9 @@ namespace ChessTests.model
         public void Test_Positions_Right_Line_Element_Exceeds_Max_Size()
         {
             // Assert
-            int boardSize = 5;
-            int x = 5;
-            int y = 5;
+            byte boardSize = 5;
+            byte x = 5;
+            byte y = 5;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -440,25 +392,9 @@ namespace ChessTests.model
         public void Test_Positions_Right_Line_Should_Return_Empty_No_Position_Available()
         {
             // Assert
-            int boardSize = 5;
-            int x = 4;
-            int y = 2;
-
-            // Arrange
-            PositionsCalculator.BoardSize = boardSize;
-            var positions = PositionsCalculator.GetRightLine(x, y);
-
-            // Act
-            Assert.Empty(positions);
-        }
-
-        [Fact]
-        public void Test_Positions_Right_Line_Should_Return_Empty_For_Negative_Values()
-        {
-            // Assert
-            int boardSize = 5;
-            int x = -2;
-            int y = -3;
+            byte boardSize = 5;
+            byte x = 4;
+            byte y = 2;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -472,9 +408,9 @@ namespace ChessTests.model
         public void Test_Positions_Right_Line_Should_Return_Single_Possition_Edge_Case()
         {
             // Assert
-            int boardSize = 3;
-            int x = 1;
-            int y = 2;
+            byte boardSize = 3;
+            byte x = 1;
+            byte y = 2;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -492,9 +428,9 @@ namespace ChessTests.model
         public void Test_Positions_Lower_Right_Diagonal_Small_Size()
         {
             // Assert
-            int boardSize = 5;
-            int x = 1;
-            int y = 2;
+            byte boardSize = 5;
+            byte x = 1;
+            byte y = 2;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -513,9 +449,9 @@ namespace ChessTests.model
         public void Test_Positions_Lower_Right_Diagonal_Bigger_Size()
         {
             // Assert
-            int boardSize = 10;
-            int x = 0;
-            int y = 0;
+            byte boardSize = 10;
+            byte x = 0;
+            byte y = 0;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -541,26 +477,9 @@ namespace ChessTests.model
         public void Test_Positions_Lower_Right_Diagonal_Element_Exceeds_Max_Size()
         {
             // Assert
-            int boardSize = 5;
-            int x = 5;
-            int y = 5;
-
-            // Arrange
-            PositionsCalculator.BoardSize = boardSize;
-            var positions = PositionsCalculator.GetLowerRightDiagonal(x, y);
-
-            // Act
-            Assert.Empty(positions);
-        }
-
-
-        [Fact]
-        public void Test_Positions_Lower_Right_Diagonal_Should_Return_Empty_For_Negative_Values()
-        {
-            // Assert
-            int boardSize = 5;
-            int x = -2;
-            int y = -3;
+            byte boardSize = 5;
+            byte x = 5;
+            byte y = 5;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -574,9 +493,9 @@ namespace ChessTests.model
         public void Test_Positions_Lower_Right_Diagonal_Should_Return_Single_Possition_Edge_Case()
         {
             // Assert
-            int boardSize = 3;
-            int x = 1;
-            int y = 1;
+            byte boardSize = 3;
+            byte x = 1;
+            byte y = 1;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -594,9 +513,9 @@ namespace ChessTests.model
         public void Test_Positions_Lower_Right_Diagonal_Should_Return_Empty_Edge_Case_X()
         {
             // Assert
-            int boardSize = 5;
-            int x = 4;
-            int y = 2;
+            byte boardSize = 5;
+            byte x = 4;
+            byte y = 2;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -610,9 +529,9 @@ namespace ChessTests.model
         public void Test_Positions_Lower_Right_Diagonal_Should_Return_Empty_Edge_Case_Y()
         {
             // Assert
-            int boardSize = 3;
-            int x = 1;
-            int y = 2;
+            byte boardSize = 3;
+            byte x = 1;
+            byte y = 2;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -626,9 +545,9 @@ namespace ChessTests.model
         public void Test_Positions_Lower_Left_Diagonal_Small_Size()
         {
             // Assert
-            int boardSize = 5;
-            int x = 2;
-            int y = 2;
+            byte boardSize = 5;
+            byte x = 2;
+            byte y = 2;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -647,9 +566,9 @@ namespace ChessTests.model
         public void Test_Positions_Lower_Left_Diagonal_Bigger_Size()
         {
             // Assert
-            int boardSize = 10;
-            int x = 9;
-            int y = 0;
+            byte boardSize = 10;
+            byte x = 9;
+            byte y = 0;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -675,26 +594,9 @@ namespace ChessTests.model
         public void Test_Positions_Lower_Left_Diagonal_Element_Exceeds_Max_Size()
         {
             // Assert
-            int boardSize = 5;
-            int x = 5;
-            int y = 5;
-
-            // Arrange
-            PositionsCalculator.BoardSize = boardSize;
-            var positions = PositionsCalculator.GetLowerLeftDiagonal(x, y);
-
-            // Act
-            Assert.Empty(positions);
-        }
-
-
-        [Fact]
-        public void Test_Positions_Lower_Left_Diagonal_Should_Return_Empty_For_Negative_Values()
-        {
-            // Assert
-            int boardSize = 5;
-            int x = -2;
-            int y = -3;
+            byte boardSize = 5;
+            byte x = 5;
+            byte y = 5;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -708,9 +610,9 @@ namespace ChessTests.model
         public void Test_Positions_Lower_Left_Diagonal_Should_Return_Single_Possition_Edge_Case()
         {
             // Assert
-            int boardSize = 3;
-            int x = 1;
-            int y = 1;
+            byte boardSize = 3;
+            byte x = 1;
+            byte y = 1;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -728,9 +630,9 @@ namespace ChessTests.model
         public void Test_Positions_Lower_Left_Diagonal_Should_Return_Empty_Edge_Case_X()
         {
             // Assert
-            int boardSize = 5;
-            int x = 0;
-            int y = 2;
+            byte boardSize = 5;
+            byte x = 0;
+            byte y = 2;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -744,9 +646,9 @@ namespace ChessTests.model
         public void Test_Positions_Lower_Left_Diagonal_Should_Return_Empty_Edge_Case_Y()
         {
             // Assert
-            int boardSize = 3;
-            int x = 1;
-            int y = 2;
+            byte boardSize = 3;
+            byte x = 1;
+            byte y = 2;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -760,9 +662,9 @@ namespace ChessTests.model
         public void Test_Positions_Upper_Right_Diagonal_Small_Size()
         {
             // Assert
-            int boardSize = 5;
-            int x = 2;
-            int y = 2;
+            byte boardSize = 5;
+            byte x = 2;
+            byte y = 2;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -781,9 +683,9 @@ namespace ChessTests.model
         public void Test_Positions_Upper_Right_Diagonal_Bigger_Size()
         {
             // Assert
-            int boardSize = 10;
-            int x = 0;
-            int y = 9;
+            byte boardSize = 10;
+            byte x = 0;
+            byte y = 9;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -809,26 +711,9 @@ namespace ChessTests.model
         public void Test_Positions_Upper_Right_Diagonal_Element_Exceeds_Max_Size()
         {
             // Assert
-            int boardSize = 5;
-            int x = 5;
-            int y = 5;
-
-            // Arrange
-            PositionsCalculator.BoardSize = boardSize;
-            var positions = PositionsCalculator.GetUpperRightDiagonal(x, y);
-
-            // Act
-            Assert.Empty(positions);
-        }
-
-
-        [Fact]
-        public void Test_Positions_Upper_Right_Diagonal_Should_Return_Empty_For_Negative_Values()
-        {
-            // Assert
-            int boardSize = 5;
-            int x = -2;
-            int y = -3;
+            byte boardSize = 5;
+            byte x = 5;
+            byte y = 5;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -842,9 +727,9 @@ namespace ChessTests.model
         public void Test_Positions_Upper_Right_Diagonal_Should_Return_Single_Possition_Edge_Case()
         {
             // Assert
-            int boardSize = 3;
-            int x = 1;
-            int y = 1;
+            byte boardSize = 3;
+            byte x = 1;
+            byte y = 1;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -862,9 +747,9 @@ namespace ChessTests.model
         public void Test_Positions_Upper_Right_Diagonal_Should_Return_Empty_Edge_Case_X()
         {
             // Assert
-            int boardSize = 5;
-            int x = 4;
-            int y = 2;
+            byte boardSize = 5;
+            byte x = 4;
+            byte y = 2;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -878,9 +763,9 @@ namespace ChessTests.model
         public void Test_Positions_Upper_Right_Diagonal_Should_Return_Empty_Edge_Case_Y()
         {
             // Assert
-            int boardSize = 3;
-            int x = 1;
-            int y = 0;
+            byte boardSize = 3;
+            byte x = 1;
+            byte y = 0;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -894,9 +779,9 @@ namespace ChessTests.model
         public void Test_Positions_Upper_Left_Diagonal_Small_Size()
         {
             // Assert
-            int boardSize = 5;
-            int x = 2;
-            int y = 3;
+            byte boardSize = 5;
+            byte x = 2;
+            byte y = 3;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -915,9 +800,9 @@ namespace ChessTests.model
         public void Test_Positions_Upper_Left_Diagonal_Bigger_Size()
         {
             // Assert
-            int boardSize = 10;
-            int x = 9;
-            int y = 8;
+            byte boardSize = 10;
+            byte x = 9;
+            byte y = 8;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -942,26 +827,9 @@ namespace ChessTests.model
         public void Test_Positions_Upper_Left_Diagonal_Element_Exceeds_Max_Size()
         {
             // Assert
-            int boardSize = 5;
-            int x = 5;
-            int y = 5;
-
-            // Arrange
-            PositionsCalculator.BoardSize = boardSize;
-            var positions = PositionsCalculator.GetUpperLeftDiagonal(x, y);
-
-            // Act
-            Assert.Empty(positions);
-        }
-
-
-        [Fact]
-        public void Test_Positions_Upper_Left_Diagonal_Should_Return_Empty_For_Negative_Values()
-        {
-            // Assert
-            int boardSize = 5;
-            int x = -2;
-            int y = -3;
+            byte boardSize = 5;
+            byte x = 5;
+            byte y = 5;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -975,9 +843,9 @@ namespace ChessTests.model
         public void Test_Positions_Upper_Left_Diagonal_Should_Return_Single_Possition_Edge_Case()
         {
             // Assert
-            int boardSize = 3;
-            int x = 1;
-            int y = 1;
+            byte boardSize = 3;
+            byte x = 1;
+            byte y = 1;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -995,9 +863,9 @@ namespace ChessTests.model
         public void Test_Positions_Upper_Left_Diagonal_Should_Return_Empty_Edge_Case_X()
         {
             // Assert
-            int boardSize = 5;
-            int x = 0;
-            int y = 2;
+            byte boardSize = 5;
+            byte x = 0;
+            byte y = 2;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;
@@ -1011,9 +879,9 @@ namespace ChessTests.model
         public void Test_Positions_Upper_Left_Diagonal_Should_Return_Empty_Edge_Case_Y()
         {
             // Assert
-            int boardSize = 3;
-            int x = 1;
-            int y = 0;
+            byte boardSize = 3;
+            byte x = 1;
+            byte y = 0;
 
             // Arrange
             PositionsCalculator.BoardSize = boardSize;

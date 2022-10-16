@@ -76,10 +76,11 @@ namespace ChessGame.model
             return positionsRange.Select(element => new Position((byte)element, incrementY));
         }
 
-        private static IEnumerable<Position> GetDiagonal(byte incrementY, IEnumerable<int> positionsRange, short reverse = 1)
+        private static IEnumerable<Position> GetDiagonal(byte incrementY, IEnumerable<int> positionsRange, sbyte reverse = 1)
         {
-            return positionsRange.Select((element, index) => new Position((byte)element, (byte)(incrementY + (index * reverse) + reverse)))
-                        .TakeWhile(position => CheckSizes(position.X, position.Y));
+            return positionsRange.Select((element, index) =>
+                        new Position((byte)element, (byte)(incrementY + (index * reverse) + reverse)))
+                                .TakeWhile(position => CheckSizes(position.X, position.Y));
         }
 
         private static bool CheckSizes(byte xPosition, byte yPosition)
