@@ -4,11 +4,11 @@ namespace ChessGame.model
 {
     public struct Position: IEquatable<Position>
     {
-        public int X { get; }
+        public byte X { get; }
 
-        public int Y { get; }
+        public byte Y { get; }
 
-        public Position(int x, int y)
+        public Position(byte x, byte y)
         {
             X = x;
             Y = y;

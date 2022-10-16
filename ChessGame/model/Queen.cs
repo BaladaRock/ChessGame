@@ -4,7 +4,7 @@ namespace ChessGame.model
 {
     public class Queen : ChessPiece
     {
-        public Queen(ColorType color, int size) : base(color, size)
+        public Queen(ColorType color, byte size) : base(color, size)
         {
             Movement = MovementType.multipleSquares;
         }

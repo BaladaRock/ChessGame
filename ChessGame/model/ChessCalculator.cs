@@ -6,7 +6,7 @@ namespace ChessGame.model
 {
     internal class ChessCalculator
     {
-        private int boardSize;
+        private byte boardSize;
 
         private ChessSquare[,] boardSquares;
 
@@ -16,7 +16,7 @@ namespace ChessGame.model
 
         private bool kingWasMoved;
 
-        public ChessCalculator(int boardSize, ChessSquare[,] boardSquares)
+        public ChessCalculator(byte boardSize, ChessSquare[,] boardSquares)
         {
             this.boardSize = boardSize;
             this.boardSquares = boardSquares;
@@ -73,7 +73,7 @@ namespace ChessGame.model
             return false;
         }
 
-        private bool CheckPromotion(int toCheck)
+        private bool CheckPromotion(byte toCheck)
         {
             return toCheck < 0 || toCheck > boardSize - 1;
         }
@@ -191,35 +191,35 @@ namespace ChessGame.model
 
         private IEnumerable<Position> GetEnemySquares(Position kingPosition, Position lastPosition)
         {
-            int kingX = kingPosition.X;
-            int kingY = kingPosition.Y;
-            int movedX = lastPosition.X;
-            int movedY = lastPosition.Y;
+            byte kingX = kingPosition.X;
+            byte kingY = kingPosition.Y;
+            byte movedX = lastPosition.X;
+            byte movedY = lastPosition.Y;
 
             switch (kingX)
             {
-                case int _ when kingY == movedY && kingX > movedX:
+                case byte _ when kingY == movedY && kingX > movedX:
                     return PositionsCalculator.GetLeftLine(movedX, movedY);
 
-                case int _ when kingY == movedY && kingX < movedX:
+                case byte _ when kingY == movedY && kingX < movedX:
                     return PositionsCalculator.GetRightLine(movedX, movedY);
 
-                case int _ when kingX == movedX && kingY > movedY:
+                case byte _ when kingX == movedX && kingY > movedY:
                     return PositionsCalculator.GetUpperColumn(movedX, movedY);
 
-                case int _ when kingX == movedX && kingY < movedY:
+                case byte _ when kingX == movedX && kingY < movedY:
                     return PositionsCalculator.GetLowerColumn(movedX, movedY);
 
-                case int _ when kingX > movedX && kingY < movedY:
+                case byte _ when kingX > movedX && kingY < movedY:
                     return PositionsCalculator.GetLowerLeftDiagonal(movedX, movedY);
 
-                case int _ when kingX > movedX && kingY > movedY:
+                case byte _ when kingX > movedX && kingY > movedY:
                     return PositionsCalculator.GetUpperLeftDiagonal(movedX, movedY);
 
-                case int _ when kingX < movedX && kingY < movedY:
+                case byte _ when kingX < movedX && kingY < movedY:
                     return PositionsCalculator.GetLowerRightDiagonal(movedX, movedY);
 
-                case int _ when kingX < movedX && kingY > movedY:
+                case byte _ when kingX < movedX && kingY > movedY:
                     return PositionsCalculator.GetUpperRightDiagonal(movedX, movedY);
 
                 default:

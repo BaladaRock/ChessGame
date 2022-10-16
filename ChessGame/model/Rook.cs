@@ -4,7 +4,7 @@ namespace ChessGame.model
 {
     public class Rook : ChessPiece
     {
-        public Rook(ColorType color, int size) : base(color, size)
+        public Rook(ColorType color, byte size) : base(color, size)
         {
             Movement = MovementType.multipleSquares;
         }

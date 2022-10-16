@@ -9,7 +9,7 @@ namespace ChessGame.model
 
         private bool wasMoved;
 
-        protected ChessPiece(ColorType color, int size)
+        protected ChessPiece(ColorType color, byte size)
         {
             Color = color;
             currentSquare = null;
@@ -39,11 +39,11 @@ namespace ChessGame.model
 
         public MovementType GetMovementType() => Movement;
 
-        protected int BoardSize { get; set; }
+        protected byte BoardSize { get; set; }
 
-        protected int CurrentX => CurrentPosition.X;
+        protected byte CurrentX => CurrentPosition.X;
 
-        protected int CurrentY => CurrentPosition.Y;
+        protected byte CurrentY => CurrentPosition.Y;
 
         public abstract PieceType PieceType { get; }
 

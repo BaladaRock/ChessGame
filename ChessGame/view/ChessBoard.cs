@@ -8,19 +8,19 @@ namespace ChessGame
     {
         private const string blackColor = "black";
 
-        private const int RookIndex = 7;
+        private const byte RookIndex = 7;
 
-        private const int KnightLeftIndex = 1;
+        private const byte KnightLeftIndex = 1;
 
-        private const int KnightRightIndex = 6;
+        private const byte KnightRightIndex = 6;
 
-        private const int BishopLeftIndex = 2;
+        private const byte BishopLeftIndex = 2;
 
-        private const int BishopRightIndex = 5;
+        private const byte BishopRightIndex = 5;
 
-        private const int QueenIndex = 3;
+        private const byte QueenIndex = 3;
 
-        private const int KingIndex = 4;
+        private const byte KingIndex = 4;
 
         private readonly FormChessBoard squares;
 
@@ -34,7 +34,7 @@ namespace ChessGame
 
         private readonly int rectangleLength;
 
-        public int Size { get; private set; }
+        public byte Size { get; private set; }
 
         public ChessBoard(FormChessBoard chessBoard, int leftMargin, int upperMargin, int borderThickness)
         {
@@ -192,14 +192,14 @@ namespace ChessGame
             borderPen.Dispose();
         }
 
-        internal void BuildChessBoard(int size, Color firstSquareColor, Color secondSquareColor)
+        internal void BuildChessBoard(byte size, Color firstSquareColor, Color secondSquareColor)
         {
             Size = size;
             chessGame.BuildChessGame(Size);
 
-            for (int i = 0; i < Size; i++)
+            for (byte i = 0; i < Size; i++)
             {
-                for (int j = 0; j < Size; j++)
+                for (byte j = 0; j < Size; j++)
                 {
                     var chessSquare = new PictureBox
                     {
