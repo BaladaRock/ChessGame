@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ChessGame.Model
 {
@@ -19,16 +20,16 @@ namespace ChessGame.Model
 
         protected IEnumerable<Position> AddSingleSquarePositions(Position position, bool requirement)
         {
-            var positions = new List<Position>(1);
-
-            if (requirement)
-            {
-                positions.Add(position);
-            }
-
-            return positions;
+            return requirement
+                ? new List<Position> { position }
+                : Enumerable.Empty<Position>().ToList();
         }
 
+        protected bool CheckThatPositionIsInsideBoard(byte xPosition, byte yPosition)
+        {
+            return xPosition >= 0 && xPosition < BoardSize &&
+                   yPosition >= 0 && yPosition < BoardSize;
+        }
         public ChessSquare GetCurrentSquare() => currentSquare;
 
         public Position CurrentPosition => currentSquare == null ? new Position(0, 0) : currentSquare.Position;
@@ -49,43 +50,43 @@ namespace ChessGame.Model
 
         public abstract IEnumerable<IEnumerable<Position>> GetAvailablePositions();
 
-        public virtual IEnumerable<Position> GetLowerLeftDiagonal()
+        public virtual IEnumerable<Position> GetLowerLeftTwoColumnMovement()
         {
 
             return PositionsCalculator.GetLowerLeftDiagonal(CurrentX, CurrentY);
         }
 
-        public virtual IEnumerable<Position> GetUpperLeftDiagonal()
+        public virtual IEnumerable<Position> GetUpperLeftTwoColumnMovement()
         {
             return PositionsCalculator.GetUpperLeftDiagonal(CurrentX, CurrentY);
         }
 
-        public virtual IEnumerable<Position> GetLowerRightDiagonal()
+        public virtual IEnumerable<Position> GetLowerRightTwoColumnMovement()
         {
             return PositionsCalculator.GetLowerRightDiagonal(CurrentX, CurrentY);
         }
 
-        public virtual IEnumerable<Position> GetUpperRightDiagonal()
+        public virtual IEnumerable<Position> GetUpperRightOneColumnMovement()
         {
             return PositionsCalculator.GetUpperRightDiagonal(CurrentX, CurrentY);
         }
 
-        public virtual IEnumerable<Position> GetLeftLine()
+        public virtual IEnumerable<Position> GetLowerLeftOneColumnMovement()
         {
             return PositionsCalculator.GetLeftLine(CurrentX, CurrentY);
         }
 
-        public virtual IEnumerable<Position> GetRightLine()
+        public virtual IEnumerable<Position> GetUpperRightTwoColumnMovement()
         {
             return PositionsCalculator.GetRightLine(CurrentX, CurrentY);
         }
 
-        public virtual IEnumerable<Position> GetUpperColumn()
+        public virtual IEnumerable<Position> GetUpperLeftOneColumnMovement()
         {
             return PositionsCalculator.GetUpperColumn(CurrentX, CurrentY);
         }
 
-        public virtual IEnumerable<Position> GetLowerColumn()
+        public virtual IEnumerable<Position> GetLowerRighOneColumnMovement()
         {
             return PositionsCalculator.GetLowerColumn(CurrentX, CurrentY);
         }

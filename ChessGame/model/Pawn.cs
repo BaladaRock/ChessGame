@@ -24,12 +24,12 @@ namespace ChessGame.Model
 
             return Color == ColorType.white
                 ? new[] {
-                    GetUpperColumn(),
+                    GetUpperLeftOneColumnMovement(),
                     doubleMove
                 }
 
                 : new[] {
-                    GetLowerColumn(),
+                    GetLowerRighOneColumnMovement(),
                     doubleMove
                 };
         }
@@ -38,17 +38,17 @@ namespace ChessGame.Model
         {
             return Color == ColorType.white
                 ? new[] {
-                    GetUpperLeftDiagonal(),
-                    GetUpperRightDiagonal()
+                    GetUpperLeftTwoColumnMovement(),
+                    GetUpperRightOneColumnMovement()
                 }
 
                 : new[] {
-                    GetLowerLeftDiagonal(),
-                    GetLowerRightDiagonal()
+                    GetLowerLeftTwoColumnMovement(),
+                    GetLowerRightTwoColumnMovement()
                 };
         }
 
-        public override IEnumerable<Position> GetUpperColumn()
+        public override IEnumerable<Position> GetUpperLeftOneColumnMovement()
         {
             return AddSingleSquarePositions(
               new Position(CurrentX, (byte)(CurrentY - 1)),
@@ -56,7 +56,7 @@ namespace ChessGame.Model
             );
         }
 
-        public override IEnumerable<Position> GetLowerColumn()
+        public override IEnumerable<Position> GetLowerRighOneColumnMovement()
         {
             return AddSingleSquarePositions(
               new Position(CurrentX, (byte)(CurrentY + 1)),
@@ -64,7 +64,7 @@ namespace ChessGame.Model
             );
         }
 
-        public override IEnumerable<Position> GetUpperLeftDiagonal()
+        public override IEnumerable<Position> GetUpperLeftTwoColumnMovement()
         {
             return AddSingleSquarePositions(
               new Position((byte)(CurrentX - 1), (byte)(CurrentY - 1)),
@@ -72,7 +72,7 @@ namespace ChessGame.Model
             );
         }
 
-        public override IEnumerable<Position> GetLowerLeftDiagonal()
+        public override IEnumerable<Position> GetLowerLeftTwoColumnMovement()
         {
             return AddSingleSquarePositions(
               new Position((byte)(CurrentX - 1), (byte)(CurrentY + 1)),
@@ -80,7 +80,7 @@ namespace ChessGame.Model
             );
         }
 
-        public override IEnumerable<Position> GetUpperRightDiagonal()
+        public override IEnumerable<Position> GetUpperRightOneColumnMovement()
         {
             return AddSingleSquarePositions(
               new Position((byte)(CurrentX + 1), (byte)(CurrentY - 1)),
@@ -88,7 +88,7 @@ namespace ChessGame.Model
             );
         }
 
-        public override IEnumerable<Position> GetLowerRightDiagonal()
+        public override IEnumerable<Position> GetLowerRightTwoColumnMovement()
         {
             return AddSingleSquarePositions(
               new Position((byte)(CurrentX + 1), (byte)(CurrentY + 1)),
