@@ -17,78 +17,86 @@ namespace ChessGame.Model
         public override IEnumerable<IEnumerable<Position>> GetAvailablePositions()
         {
             return new[] {
-                GetUpperLeftDiagonal(),
-                GetLowerLeftDiagonal(),
-                GetUpperRightDiagonal(),
-                GetLowerRightDiagonal(),
-                GetLeftLine(),
-                GetUpperColumn(),
-                GetRightLine(),
-                GetLowerColumn()
+                GetUpperLeftOneColumnMovement(),
+                GetUpperLeftTwoColumnMovement(),
+                GetUpperRightOneColumnMovement(),
+                GetUpperRightTwoColumnMovement(),
+                GetLowerLeftOneColumnMovement(),
+                GetLowerLeftTwoColumnMovement(),
+                GetLowerRighOneColumnMovement(),
+                GetLowerRightTwoColumnMovement()
             };
         }
 
-        public override IEnumerable<Position> GetLowerLeftDiagonal()
+        public override IEnumerable<Position> GetLowerLeftTwoColumnMovement()
         {
+            var possibleMove = new Position((byte)(CurrentX - 2), (byte)(CurrentY + 1));
             return AddSingleSquarePositions(
-              new Position((byte)(CurrentX - 1), (byte)(CurrentY + 2)),
-              CurrentX > 0 && CurrentY < boardSize - 1
+              possibleMove,
+              CheckThatPositionIsInsideBoard(possibleMove.X, possibleMove.Y)
             );
         }
 
-        public override IEnumerable<Position> GetLeftLine()
+        public override IEnumerable<Position> GetLowerLeftOneColumnMovement()
         {
+            var possibleMove = new Position((byte)(CurrentX - 1), (byte)(CurrentY + 2));
             return AddSingleSquarePositions(
-              new Position((byte)(CurrentX - 2), (byte)(CurrentY + 1)),
-              CurrentX > 1 && CurrentY < boardSize
+              possibleMove,
+              CheckThatPositionIsInsideBoard(possibleMove.X, possibleMove.Y)
             );
         }
 
-        public override IEnumerable<Position> GetUpperLeftDiagonal()
+        public override IEnumerable<Position> GetUpperLeftTwoColumnMovement()
         {
+            var possibleMove = new Position((byte)(CurrentX - 2), (byte)(CurrentY - 1));
             return AddSingleSquarePositions(
-              new Position((byte)(CurrentX - 1), (byte)(CurrentY - 2)),
-              CurrentX > 0 && CurrentY > 1
+              possibleMove,
+              CheckThatPositionIsInsideBoard(possibleMove.X, possibleMove.Y)
             );
         }
 
-        public override IEnumerable<Position> GetUpperColumn()
+        public override IEnumerable<Position> GetUpperLeftOneColumnMovement()
         {
+            var possibleMove = new Position((byte)(CurrentX - 1), (byte)(CurrentY - 2));
             return AddSingleSquarePositions(
-              new Position((byte)(CurrentX - 2), (byte)(CurrentY - 1)),
-              CurrentX > 1 && CurrentY > 0
+              possibleMove,
+              CheckThatPositionIsInsideBoard(possibleMove.X, possibleMove.Y)
             );
         }
 
-        public override IEnumerable<Position> GetLowerColumn()
+        public override IEnumerable<Position> GetLowerRighOneColumnMovement()
         {
+            var possibleMove = new Position((byte)(CurrentX + 1), (byte)(CurrentY + 2));
             return AddSingleSquarePositions(
-              new Position((byte)(CurrentX + 1), (byte)(CurrentY + 2)),
-              CurrentX < boardSize && CurrentY < boardSize - 1
+              possibleMove,
+              CheckThatPositionIsInsideBoard(possibleMove.X, possibleMove.Y)
             );
         }
 
-        public override IEnumerable<Position> GetLowerRightDiagonal()
+        public override IEnumerable<Position> GetLowerRightTwoColumnMovement()
         {
+            var possibleMove = new Position((byte)(CurrentX + 2), (byte)(CurrentY + 1));
             return AddSingleSquarePositions(
-              new Position((byte)(CurrentX + 2), (byte)(CurrentY + 1)),
-              CurrentX < boardSize - 1 && CurrentY < boardSize
+              possibleMove,
+              CheckThatPositionIsInsideBoard(possibleMove.X, possibleMove.Y)
             );
         }
 
-        public override IEnumerable<Position> GetUpperRightDiagonal()
+        public override IEnumerable<Position> GetUpperRightOneColumnMovement()
         {
+            var possibleMove = new Position((byte)(CurrentX + 1), (byte)(CurrentY - 2));
             return AddSingleSquarePositions(
-              new Position((byte)(CurrentX + 1), (byte)(CurrentY - 2)),
-              CurrentX < boardSize && CurrentY > 1
+              possibleMove,
+              CheckThatPositionIsInsideBoard(possibleMove.X, possibleMove.Y)
             );
         }
 
-        public override IEnumerable<Position> GetRightLine()
+        public override IEnumerable<Position> GetUpperRightTwoColumnMovement()
         {
+            var possibleMove = new Position((byte)(CurrentX + 2), (byte)(CurrentY - 1));
             return AddSingleSquarePositions(
-              new Position((byte)(CurrentX + 2), (byte)(CurrentY - 1)),
-              CurrentX < boardSize - 1 && CurrentY > 0
+              possibleMove,
+              CheckThatPositionIsInsideBoard(possibleMove.X, possibleMove.Y)
             );
         }
     }

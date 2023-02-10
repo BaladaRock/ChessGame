@@ -14,10 +14,10 @@ namespace ChessGame.Model
         public override IEnumerable<IEnumerable<Position>> GetAvailablePositions()
         {
             return new[] {
-                GetUpperLeftDiagonal(),
-                GetLowerLeftDiagonal(),
-                GetUpperRightDiagonal(),
-                GetLowerRightDiagonal()
+                GetUpperLeftTwoColumnMovement(),
+                GetLowerLeftTwoColumnMovement(),
+                GetUpperRightOneColumnMovement(),
+                GetLowerRightTwoColumnMovement()
             };
         }
     }
