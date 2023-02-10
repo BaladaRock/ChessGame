@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ChessGame.model
+namespace ChessGame.Model
 {
     internal class ChessCalculator
     {

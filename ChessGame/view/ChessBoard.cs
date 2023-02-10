@@ -1,4 +1,4 @@
-﻿using ChessGame.controller;
+﻿using ChessGame.Controller;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -24,7 +24,7 @@ namespace ChessGame
 
         private readonly FormChessBoard squares;
 
-        private controller.ChessGame chessGame;
+        private Controller.ChessGame chessGame;
 
         private readonly int leftMargin;
 
@@ -43,7 +43,7 @@ namespace ChessGame
             this.upperMargin = upperMargin;
             gutterLength = leftMargin * KingIndex;
             rectangleLength = (BishopLeftIndex * gutterLength) + (KingIndex * borderThickness);
-            chessGame = new controller.ChessGame(Size);
+            chessGame = new Controller.ChessGame(Size);
             DrawOutline(borderThickness);
         }
 

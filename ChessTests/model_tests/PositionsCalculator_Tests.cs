@@ -1,6 +1,6 @@
-using ChessGame.model;
+using ChessGame.Model;
 
-namespace ChessTests.model
+namespace ChessTests.Model
 {
     public class PositionsCalculator_Tests
     {

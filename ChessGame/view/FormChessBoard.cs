@@ -1,6 +1,7 @@
-﻿using ChessGame.test;
+﻿using ChessGame.Tests;
 using System;
 using System.Drawing;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace ChessGame
@@ -12,8 +13,14 @@ namespace ChessGame
         public FormChessBoard()
         {
             InitializeComponent();
-            var test = new ChessBuilder();
-            test.TestObjects();
+
+            var runtests = new Thread(() =>
+            {
+                var test = new ChessBuilder();
+                test.TestObjects();
+            });
+                
+            runtests.Start();
         }
 
         private void FormChessBoard_Paint(object sender, PaintEventArgs e)

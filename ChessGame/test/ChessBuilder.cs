@@ -1,9 +1,9 @@
-﻿using ChessGame.model;
+﻿using ChessGame.Model;
 using System;
 using System.Diagnostics;
 using System.Linq;
 
-namespace ChessGame.test
+namespace ChessGame.Tests
 {
     internal class ChessBuilder
     {

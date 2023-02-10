@@ -1,22 +1,22 @@
-﻿using ChessGame.model;
+﻿using ChessGame.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChessGame.controller
+namespace ChessGame.Controller
 {
     internal class ChessGame
     {
-        private model.ChessBoard board;
+        private Model.ChessBoard board;
 
         public byte BoardSize { get; private set; }
 
         public ChessGame(byte gameSize)
         {
             BoardSize = gameSize;
-            board = new model.ChessBoard(BoardSize);
+            board = new Model.ChessBoard(BoardSize);
         }
 
         internal void OccupySquare(string piece, string pieceColor, int rowIndex, int columnIndex)
@@ -64,7 +64,7 @@ namespace ChessGame.controller
         internal void BuildChessGame(byte size)
         {
             BoardSize = size;
-            board = new model.ChessBoard(BoardSize);
+            board = new Model.ChessBoard(BoardSize);
         }
 
         internal string GetActivePiece()

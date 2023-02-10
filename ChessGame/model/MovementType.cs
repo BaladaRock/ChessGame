@@ -1,4 +1,4 @@
-﻿namespace ChessGame.model
+﻿namespace ChessGame.Model
 {
     public enum MovementType
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ChessGame.model
+namespace ChessGame.Model
 {
     public class Knight : ChessPiece
     {

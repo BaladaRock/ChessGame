@@ -1,4 +1,4 @@
-﻿using ChessGame.model;
+﻿using ChessGame.Model;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -7,7 +7,7 @@ namespace ChessGame
 {
     public class CustomChessSquare
     {
-        private readonly controller.ChessGame chessGame;
+        private readonly Controller.ChessGame chessGame;
 
         private readonly FormChessBoard chessBoardGraphics;
 
@@ -17,7 +17,7 @@ namespace ChessGame
 
         public Color OriginalColor { get; set; }
 
-        internal CustomChessSquare(controller.ChessGame chessBoard, PictureBox square, FormChessBoard chessBoardGraphics, int boardSize)
+        internal CustomChessSquare(Controller.ChessGame chessBoard, PictureBox square, FormChessBoard chessBoardGraphics, int boardSize)
         {
             this.chessBoardGraphics = chessBoardGraphics;
             this.chessGame = chessBoard;
