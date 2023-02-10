@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ChessGame.model
+namespace ChessGame.Model
 {
     public abstract class ChessPiece : IPiece
     {

@@ -5,7 +5,7 @@ using System.Reflection;
 using static System.Linq.Enumerable;
 
 
-namespace ChessGame.model
+namespace ChessGame.Model
 {
     public static class PositionsCalculator
     {
